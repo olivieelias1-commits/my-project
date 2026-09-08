@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HustleHub — Find Clients. Sell Services. Get Paid.</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#111827;color:white;padding:18px 6%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:800}.logo span{color:#7c3aed}
+nav a{color:#dbe3ef;text-decoration:none;margin-left:22px}
+.hero{padding:70px 6%;background:linear-gradient(135deg,#111827,#312e81);color:white}
+.hero h1{font-size:48px;max-width:700px;margin:0 0 18px}.hero p{font-size:19px;max-width:620px;line-height:1.6;color:#dbe3ef}
+.btn{display:inline-block;background:#7c3aed;color:white;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:700;margin-top:15px}
+section{padding:45px 6%}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.card{background:white;padding:24px;border-radius:16px;box-shadow:0 6px 20px #11182712}.card h3{margin-top:8px}.icon{font-size:30px}
+.dashboard{background:#111827;color:white;border-radius:20px;padding:28px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}.stat{background:#1f2937;padding:20px;border-radius:12px}.stat b{font-size:25px;display:block;margin-top:8px}
+table{width:100%;border-collapse:collapse;background:#1f2937;border-radius:12px;overflow:hidden}th,td{text-align:left;padding:14px;border-bottom:1px solid #374151}
+footer{padding:30px 6%;background:#111827;color:#9ca3af;text-align:center}
+@media(max-width:700px){.hero h1{font-size:36px}.stats{grid-template-columns:repeat(2,1fr)}nav{display:none}}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn.small{border:0;cursor:pointer;font-size:14px;padding:11px 15px}
+.btn.secondary{background:#374151}
+.pitch{margin-top:18px;background:#f9fafb;color:#172033;padding:18px;border-radius:12px;line-height:1.6}
+.lead-form{display:grid;grid-template-columns:2fr 2fr 1fr auto;gap:10px;margin:20px 0}
+.lead-form input,.lead-form select{padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:15px}
+.lead-item{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.badge{padding:6px 10px;border-radius:999px;background:#ede9fe;color:#5b21b6;font-size:12px;font-weight:700}
+@media(max-width:700px){.lead-form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">Hustle<span>Hub</span></div>
+<nav>
+<a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#leads">Leads</a>
+<a href="#start">Get Started</a>
+</nav>
+</header>
+
+<div class="hero" id="start">
+<h1>Find clients. Sell services. Get paid.</h1>
+<p>HustleHub is a simple platform for people who want to turn digital skills into real customers and income.</p>
+<a class="btn" href="#dashboard">Open My Dashboard</a>
+</div>
+
+<section id="features">
+<h2>Everything you need to grow</h2>
+<div class="cards">
+<div class="card"><div class="icon">🔎</div><h3>Find Clients</h3><p>Organize business prospects and keep track of who you contacted.</p></div>
+<div class="card"><div class="icon">🤖</div><h3>AI Assistant</h3><p>Create professional pitches, follow-ups and customer replies.</p></div>
+<div class="card"><div class="icon">💬</div><h3>Messages</h3><p>Keep your client conversations and next actions organized.</p></div>
+<div class="card"><div class="icon">💰</div><h3>Earnings</h3><p>Track deals, payments and your progress toward your income goal.</p></div>
+</div>
+</section>
+
+<section id="dashboard">
+<div class="dashboard">
+<h2>My Hustle Dashboard</h2>
+<p>Demo data — this is the first prototype.</p>
+<div class="stats">
+<div class="stat">Leads<b>24</b></div>
+<div class="stat">Clients<b>7</b></div>
+<div class="stat">Deals<b>4</b></div>
+<div class="stat">Earnings<b>$320</b></div>
+</div>
+<h3>Recent prospects</h3>
+<table>
+<tr><th>Business</th><th>Service</th><th>Status</th></tr>
+<tr><td>Local Restaurant</td><td>Google Reviews</td><td>Contacted</td></tr>
+<tr><td>Retail Shop</td><td>AI Customer Replies</td><td>Interested</td></tr>
+<tr><td>Property Business</td><td>Digital Marketing</td><td>New Lead</td></tr>
+</table>
+<div class="actions">
+  <button class="btn small" onclick="addLead()">+ Add Lead</button>
+  <button class="btn small secondary" onclick="generatePitch()">🤖 Generate Pitch</button>
+</div>
+<div id="pitchBox" class="pitch" style="display:none"></div>
+</div>
+</section>
+
+<section id="leads">
+<h2>Lead Manager</h2>
+<div class="lead-form">
+<input id="business" placeholder="Business name">
+<input id="service" placeholder="Service you offer">
+<select id="status"><option>New Lead</option><option>Contacted</option><option>Interested</option><option>Won</option></select>
+<button class="btn small" onclick="saveLead()">Save Lead</button>
+</div>
+<div id="leadList" class="cards"></div>
+</section>
+
+<section>
+<h2>Our mission</h2>
+<p>Build a practical platform that helps users move from finding a prospect to making a sale — with tools that are simple enough to use from a phone.</p>
+</section>
+
+<footer>© 2026 HustleHub — Version 2 prototype</footer>
+
+<script>
+const leads = JSON.parse(localStorage.getItem('hustlehub_leads') || '[]');
+
+function renderLeads(){
+  const box=document.getElementById('leadList');
+  if(!leads.length){box.innerHTML='<div class="card"><p>No leads yet. Add your first prospect above.</p></div>';return;}
+  box.innerHTML=leads.map((l,i)=>`
+    <div class="card lead-item">
+      <div><h3>${escapeHtml(l.business)}</h3><p>${escapeHtml(l.service)}</p></div>
+      <span class="badge">${escapeHtml(l.status)}</span>
+      <button class="btn small secondary" onclick="deleteLead(${i})">Delete</button>
+    </div>`).join('');
+}
+function saveLead(){
+  const business=document.getElementById('business').value.trim();
+  const service=document.getElementById('service').value.trim();
+  const status=document.getElementById('status').value;
+  if(!business||!service){alert('Enter a business name and service.');return;}
+  leads.unshift({business,service,status});
+  localStorage.setItem('hustlehub_leads',JSON.stringify(leads));
+  document.getElementById('business').value='';
+  document.getElementById('service').value='';
+  renderLeads();
+}
+function addLead(){document.getElementById('leads').scrollIntoView({behavior:'smooth'});}
+function deleteLead(i){leads.splice(i,1);localStorage.setItem('hustlehub_leads',JSON.stringify(leads));renderLeads();}
+function generatePitch(){
+  const box=document.getElementById('pitchBox');
+  box.style.display='block';
+  box.innerHTML='<strong>Sample AI Pitch</strong><br><br>Hi! I help businesses improve their online presence and attract more customers. I noticed your business and would love to show you a simple way I can help. Would you be open to a quick chat this week?';
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+renderLeads();
+</script>
+
+</body>
+    </html>
+    
