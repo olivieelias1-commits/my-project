@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Hustle Pro - Fixed</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0f0f1a;color:#fff;padding:16px;min-height:100vh;padding-bottom:80px}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:16px;margin-top:12px}
+.btn{width:100%;padding:14px;margin-top:12px;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border:none;border-radius:12px;color:#fff;font-weight:700}
+.input{width:100%;padding:12px;margin-top:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.fab{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:14px 28px;border-radius:30px;font-weight:800}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login">
+<div class="card" style="width:100%;max-width:360px">
+<h1 style="color:#a78bfa">My Hustle Dashboard</h1>
+<p style="opacity:.6;font-size:12px;margin-top:6px">Level 4.1 Fixed ✅ No more NaN!</p>
+<input id="email" class="input" placeholder="Email">
+<input id="pass" type="password" class="input" placeholder="Password: 1234">
+<button class="btn" onclick="login()">Unlock Dashboard →</button>
+<button class="btn" style="background:rgba(239,68,68,.3)" onclick="localStorage.clear();location.reload()">🔄 FIX $NaN - Tap here</button>
+</div>
+</div>
+
+<div id="dashScreen" style="display:none;max-width:480px;margin:0 auto">
+<h2>My Hustle Dashboard <button onclick="logout()" style="float:right;font-size:11px;padding:6px 12px;border-radius:20px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.1)">Logout</button></h2>
+
+<div class="grid" style="margin-top:16px">
+<div class="card"><p style="opacity:.6;font-size:11px">Leads</p><h3 id="leadsCount">0</h3></div>
+<div class="card"><p style="opacity:.6;font-size:11px">Pipeline</p><h3 id="pipeVal">$0</h3></div>
+<div class="card"><p style="opacity:.6;font-size:11px">Deals</p><h3 id="dealsCount">0</h3></div>
+<div class="card"><p style="opacity:.6;font-size:11px">Earnings</p><h3 id="earnVal" style="color:#4ade80">$0</h3></div>
+</div>
+
+<div class="card">
+<p style="font-weight:700">🎯 Weekly Goal: $500 - <span id="goalPct">0%</span></p>
+<div style="height:8px;background:rgba(255,255,255,.1);border-radius:10px;margin-top:10px"><div id="goalBar" style="height:100%;width:0%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border-radius:10px"></div></div>
+<p id="goalText" style="font-size:11px;opacity:.6;margin-top:8px">$0 / $500</p>
+</div>
+
+<div class="card"><input id="searchBox" class="input" style="margin:0" placeholder="🔍 Search business..." oninput="searchLeads()"></div>
+
+<div class="card"><p style="font-weight:700;margin-bottom:10px">Recent prospects</p><div id="leadsList"></div></div>
+
+<button class="fab" onclick="openModal()">+ Add Lead</button>
+</div>
+
+<div id="leadModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:20px;z-index:100">
+<div class="card" style="background:#1e1e2f;width:100%;max-width:360px">
+<h3>Add New Lead</h3>
+<input id="bizName" class="input" placeholder="Business name">
+<select id="service" class="input"><option>AI Customer Replies</option><option>Google Reviews</option><option>WhatsApp Bot</option><option>Lead Gen</option></select>
+<select id="status" class="input"><option>New Lead</option><option>Contacted</option><option>Interested</option><option>Closed</option></select>
+<input id="dealVal" type="number" class="input" placeholder="Deal value e.g. 80">
+<button class="btn" onclick="addLead()">Save Lead</button>
+<button class="btn" style="background:rgba(255,255,255,.08)" onclick="closeModal()">Cancel</button>
+</div>
+</div>
+
+<script>
+let defaultLeads=[
+{biz:"Cafe Javas Kampala",service:"WhatsApp Bot",status:"New Lead",val:100},
+{biz:"Local Restaurants",service:"AI Customer Replies",status:"Closed",val:80},
+{biz:"Retail Shop",service:"Google Reviews",status:"Interested",val:120},
+{biz:"Salon Entebbe",service:"Google Reviews",status:"Contacted",val:80}
+];
+let stored=localStorage.getItem('hustle_leads');
+let leads=[];
+try{
+ leads=stored?JSON.parse(stored):defaultLeads;
+ leads=leads.map(l=>({biz:l.biz||l.name||"Business",service:l.service||"AI Service",status:l.status||"New Lead",val:parseInt(l.val||l.value||80)||80}));
+}catch(e){leads=defaultLeads}
+
+function save(){localStorage.setItem('hustle_leads',JSON.stringify(leads))}
+function login(){localStorage.setItem('hustle_logged','1');document.getElementById('loginScreen').style.display='none';document.getElementById('dashScreen').style.display='block';render()}
+function logout(){localStorage.removeItem('hustle_logged');location.reload()}
+function openModal(){document.getElementById('leadModal').style.display='flex'}
+function closeModal(){document.getElementById('leadModal').style.display='none'}
+function addLead(){
+ let b=document.getElementById('bizName').value.trim();
+ if(!b){alert('Add business name');return}
+ let s=document.getElementById('service').value;
+ let st=document.getElementById('status').value;
+ let v=parseInt(document.getElementById('dealVal').value)||80;
+ leads.unshift({biz:b,service:s,status:st,val:v});
+ save();closeModal();
+ document.getElementById('bizName').value='';
+ document.getElementById('dealVal').value='';
+ render();
+}
+function delLead(i){leads.splice(i,1);save();render()}
+function waLead(i){
+ let l=leads[i];
+ let v=l.val||80;
+ let msg=`Hi ${l.biz}! I help businesses get more customers with ${l.service}. Setup in 24h for $${v}. Quick demo? - Olivie`;
+ window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function searchLeads(){
+ let q=document.getElementById('searchBox').value.toLowerCase();
+ let filtered=q?leads.filter(x=>x.biz.toLowerCase().includes(q)):leads;
+ renderList(filtered);
+}
+function renderList(data){
+ if(!data)data=leads;
+ let list=document.getElementById('leadsList');
+ if(data.length==0){list.innerHTML='<p style="opacity:.5">No leads</p>';return}
+ list.innerHTML=data.map(l=>{
+  let realIdx=leads.indexOf(l);
+  let v=l.val||80;
+  return `<div class="row"><div><b>${l.biz}</b><div style="opacity:.5;font-size:11px">${l.service} - $${v}</div></div><div><span style="background:rgba(139,92,246,.2);padding:4px 8px;border-radius:20px;font-size:10px">${l.status}</span><button onclick="waLead(${realIdx})" style="margin-left:6px;background:#25D366;color:#fff;border:none;padding:4px 8px;border-radius:8px">💬</button><button onclick="delLead(${realIdx})" style="margin-left:4px;background:rgba(255,255,255,.1);color:#fff;border:none;padding:4px 8px;border-radius:8px">✕</button></div></div>`;
+ }).join('');
+}
+function render(){
+ let pipeline=leads.reduce((a,b)=>a+(parseInt(b.val)||0),0);
+ let deals=leads.filter(x=>x.status=='Closed').length;
+ let earnings=leads.reduce((a,b)=>{
+  let v=parseInt(b.val)||0;
+  if(b.status=='Closed')return a+v;
+  if(b.status=='Interested')return a+v*0.2;
+  if(b.status=='Contacted')return a+v*0.1;
+  return a;
+ },0);
+ document.getElementById('leadsCount').innerText=leads.length;
+ document.getElementById('pipeVal').innerText='$'+pipeline;
+ document.getElementById('dealsCount').innerText=deals;
+ document.getElementById('earnVal').innerText='$'+Math.round(earnings);
+ let pct=Math.min(100,Math.round(earnings/500*100));
+ document.getElementById('goalPct').innerText=pct+'%';
+ document.getElementById('goalBar').style.width=pct+'%';
+ document.getElementById('goalText').innerText='$'+Math.round(earnings)+' / $500';
+ renderList();
+}
+if(localStorage.getItem('hustle_logged')){
+ document.getElementById('loginScreen').style.display='none';
+ document.getElementById('dashScreen').style.display='block';
+ render();
+}
+</script>
+</body>
+</html>
