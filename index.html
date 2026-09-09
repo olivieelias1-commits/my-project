@@ -3,135 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HustleHub — Find Clients. Sell Services. Get Paid.</title>
+<title>HustleHub Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
-header{background:#111827;color:white;padding:18px 6%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:800}.logo span{color:#7c3aed}
-nav a{color:#dbe3ef;text-decoration:none;margin-left:22px}
-.hero{padding:70px 6%;background:linear-gradient(135deg,#111827,#312e81);color:white}
-.hero h1{font-size:48px;max-width:700px;margin:0 0 18px}.hero p{font-size:19px;max-width:620px;line-height:1.6;color:#dbe3ef}
-.btn{display:inline-block;background:#7c3aed;color:white;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:700;margin-top:15px}
-section{padding:45px 6%}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.card{background:white;padding:24px;border-radius:16px;box-shadow:0 6px 20px #11182712}.card h3{margin-top:8px}.icon{font-size:30px}
-.dashboard{background:#111827;color:white;border-radius:20px;padding:28px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}.stat{background:#1f2937;padding:20px;border-radius:12px}.stat b{font-size:25px;display:block;margin-top:8px}
-table{width:100%;border-collapse:collapse;background:#1f2937;border-radius:12px;overflow:hidden}th,td{text-align:left;padding:14px;border-bottom:1px solid #374151}
-footer{padding:30px 6%;background:#111827;color:#9ca3af;text-align:center}
-@media(max-width:700px){.hero h1{font-size:36px}.stats{grid-template-columns:repeat(2,1fr)}nav{display:none}}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.btn.small{border:0;cursor:pointer;font-size:14px;padding:11px 15px}
-.btn.secondary{background:#374151}
-.pitch{margin-top:18px;background:#f9fafb;color:#172033;padding:18px;border-radius:12px;line-height:1.6}
-.lead-form{display:grid;grid-template-columns:2fr 2fr 1fr auto;gap:10px;margin:20px 0}
-.lead-form input,.lead-form select{padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:15px}
-.lead-item{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.badge{padding:6px 10px;border-radius:999px;background:#ede9fe;color:#5b21b6;font-size:12px;font-weight:700}
-@media(max-width:700px){.lead-form{grid-template-columns:1fr}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:radial-gradient(1200px at 20% 10%, #1e293b 0%, #0f172a 50%, #020617 100%);min-height:100vh;color:white}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:32px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.login-card h1{font-size:28px;font-weight:800;margin-bottom:6px;background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;color:white;margin-bottom:12px;outline:none}
+.btn-primary{width:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border:none;padding:14px;border-radius:12px;color:white;font-weight:700;cursor:pointer}
+.dashboard{max-width:480px;margin:0 auto;padding:20px;display:none}
+.header{display:flex;justify-content:space-between;align-items:center;margin:12px 0 20px}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.stat{background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:18px}
+.stat span{font-size:13px;opacity:0.6;display:block;margin-bottom:6px}
+.stat b{font-size:28px;font-weight:800}
+.table-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden}
+.row{display:grid;grid-template-columns:1.2fr 1fr 0.9fr;gap:8px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px}
+.row.head{opacity:0.5;font-size:12px;font-weight:600;text-transform:uppercase;background:rgba(255,255,255,0.03)}
+.badge{padding:4px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.contacted{background:rgba(96,165,250,0.2);color:#60a5fa}
+.badge.interested{background:rgba(251,191,36,0.2);color:#fbbf24}
+.badge.new{background:rgba(52,211,153,0.2);color:#34d399}
+.badge.closed{background:rgba(139,92,246,0.25);color:#a78bfa}
+.actions{display:flex;gap:10px;margin-top:18px}
+.btn{border:none;padding:13px 18px;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer;flex:1}
+.btn-add{background:linear-gradient(90deg,#8b5cf6,#7c3aed);color:white}
+.btn-pitch{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.1)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal.active{display:flex}
+.modal-box{background:#111827;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;width:100%;max-width:380px}
+.pitch-box{background:rgba(139,92,246,0.1);border:1px dashed rgba(139,92,246,0.4);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;margin:12px 0;white-space:pre-wrap}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">Hustle<span>Hub</span></div>
-<nav>
-<a href="#features">Features</a><a href="#dashboard">Dashboard</a><a href="#leads">Leads</a>
-<a href="#start">Get Started</a>
-</nav>
-</header>
-
-<div class="hero" id="start">
-<h1>Find clients. Sell services. Get paid.</h1>
-<p>HustleHub is a simple platform for people who want to turn digital skills into real customers and income.</p>
-<a class="btn" href="#dashboard">Open My Dashboard</a>
+<div id="loginScreen" class="login-wrap">
+<div class="login-card">
+<h1>HustleHub Pro</h1>
+<p style="opacity:0.6;font-size:14px;margin-bottom:24px">Sign in to manage your hustle</p>
+<input id="loginEmail" class="input" placeholder="Email" value="olivie@hustlehub.com">
+<input id="loginPass" type="password" class="input" placeholder="Password" value="1234">
+<button class="btn-primary" onclick="login()">Unlock Dashboard →</button>
 </div>
-
-<section id="features">
-<h2>Everything you need to grow</h2>
-<div class="cards">
-<div class="card"><div class="icon">🔎</div><h3>Find Clients</h3><p>Organize business prospects and keep track of who you contacted.</p></div>
-<div class="card"><div class="icon">🤖</div><h3>AI Assistant</h3><p>Create professional pitches, follow-ups and customer replies.</p></div>
-<div class="card"><div class="icon">💬</div><h3>Messages</h3><p>Keep your client conversations and next actions organized.</p></div>
-<div class="card"><div class="icon">💰</div><h3>Earnings</h3><p>Track deals, payments and your progress toward your income goal.</p></div>
 </div>
-</section>
-
-<section id="dashboard">
-<div class="dashboard">
-<h2>My Hustle Dashboard</h2>
-<p>Demo data — this is the first prototype.</p>
-<div class="stats">
-<div class="stat">Leads<b>24</b></div>
-<div class="stat">Clients<b>7</b></div>
-<div class="stat">Deals<b>4</b></div>
-<div class="stat">Earnings<b>$320</b></div>
+<div id="dashScreen" class="dashboard">
+<div class="header"><h2>My Hustle Dashboard</h2><span onclick="logout()" style="font-size:12px;opacity:0.6;background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px">Logout</span></div>
+<p id="welcomeText" style="opacity:0.6;font-size:13px;margin-bottom:14px">Welcome</p>
+<div class="card-grid">
+<div class="stat"><span>Leads</span><b id="leadsCount">0</b></div>
+<div class="stat"><span>Clients</span><b id="clientsCount">0</b></div>
+<div class="stat"><span>Deals</span><b id="dealsCount">0</b></div>
+<div class="stat"><span>Earnings</span><b id="earnCount" style="color:#34d399">$0</b></div>
 </div>
-<h3>Recent prospects</h3>
-<table>
-<tr><th>Business</th><th>Service</th><th>Status</th></tr>
-<tr><td>Local Restaurant</td><td>Google Reviews</td><td>Contacted</td></tr>
-<tr><td>Retail Shop</td><td>AI Customer Replies</td><td>Interested</td></tr>
-<tr><td>Property Business</td><td>Digital Marketing</td><td>New Lead</td></tr>
-</table>
+<div style="font-weight:700;margin:18px 0 12px">Recent prospects</div>
+<div class="table-card" id="prospectsTable"><div class="row head"><div>Business</div><div>Service</div><div>Status</div></div></div>
 <div class="actions">
-  <button class="btn small" onclick="addLead()">+ Add Lead</button>
-  <button class="btn small secondary" onclick="generatePitch()">🤖 Generate Pitch</button>
+<button class="btn btn-add" onclick="openModal('leadModal')">+ Add Lead</button>
+<button class="btn btn-pitch" onclick="openModal('pitchModal')">🤖 Generate Pitch</button>
 </div>
-<div id="pitchBox" class="pitch" style="display:none"></div>
 </div>
-</section>
-
-<section id="leads">
-<h2>Lead Manager</h2>
-<div class="lead-form">
-<input id="business" placeholder="Business name">
-<input id="service" placeholder="Service you offer">
-<select id="status"><option>New Lead</option><option>Contacted</option><option>Interested</option><option>Won</option></select>
-<button class="btn small" onclick="saveLead()">Save Lead</button>
+<div id="leadModal" class="modal" onclick="if(event.target==this)closeModal('leadModal')">
+<div class="modal-box">
+<h3>Add New Lead</h3>
+<input id="bizName" class="input" placeholder="Business name e.g. Kampala Cafe">
+<select id="service" class="input"><option>Google Reviews</option><option>AI Customer Replies</option><option>Digital Marketing</option><option>Website Design</option><option>WhatsApp Bot</option></select>
+<select id="status" class="input"><option>New Lead</option><option>Contacted</option><option>Interested</option><option>Closed</option></select>
+<input id="dealValue" type="number" class="input" placeholder="Deal value $ e.g. 80">
+<button class="btn-primary" onclick="addLead()">Save Lead</button>
 </div>
-<div id="leadList" class="cards"></div>
-</section>
-
-<section>
-<h2>Our mission</h2>
-<p>Build a practical platform that helps users move from finding a prospect to making a sale — with tools that are simple enough to use from a phone.</p>
-</section>
-
-<footer>© 2026 HustleHub — Version 2 prototype</footer>
-
+</div>
+<div id="pitchModal" class="modal" onclick="if(event.target==this)closeModal('pitchModal')">
+<div class="modal-box">
+<h3>AI Pitch Generator</h3>
+<input id="pitchBiz" class="input" placeholder="Business name">
+<select id="pitchService" class="input"><option>Google Reviews</option><option>AI Customer Replies</option><option>Digital Marketing</option><option>Website Design</option><option>WhatsApp Bot</option></select>
+<button class="btn-primary" onclick="generatePitch()">Generate Magic Pitch ✨</button>
+<div id="pitchResult" class="pitch-box" style="display:none"></div>
+<button id="copyBtn" style="display:none" class="btn btn-add" onclick="copyPitch()">Copy to WhatsApp</button>
+</div>
+</div>
 <script>
-const leads = JSON.parse(localStorage.getItem('hustlehub_leads') || '[]');
-
-function renderLeads(){
-  const box=document.getElementById('leadList');
-  if(!leads.length){box.innerHTML='<div class="card"><p>No leads yet. Add your first prospect above.</p></div>';return;}
-  box.innerHTML=leads.map((l,i)=>`
-    <div class="card lead-item">
-      <div><h3>${escapeHtml(l.business)}</h3><p>${escapeHtml(l.service)}</p></div>
-      <span class="badge">${escapeHtml(l.status)}</span>
-      <button class="btn small secondary" onclick="deleteLead(${i})">Delete</button>
-    </div>`).join('');
-}
-function saveLead(){
-  const business=document.getElementById('business').value.trim();
-  const service=document.getElementById('service').value.trim();
-  const status=document.getElementById('status').value;
-  if(!business||!service){alert('Enter a business name and service.');return;}
-  leads.unshift({business,service,status});
-  localStorage.setItem('hustlehub_leads',JSON.stringify(leads));
-  document.getElementById('business').value='';
-  document.getElementById('service').value='';
-  renderLeads();
-}
-function addLead(){document.getElementById('leads').scrollIntoView({behavior:'smooth'});}
-function deleteLead(i){leads.splice(i,1);localStorage.setItem('hustlehub_leads',JSON.stringify(leads));renderLeads();}
-function generatePitch(){
-  const box=document.getElementById('pitchBox');
-  box.style.display='block';
-  box.innerHTML='<strong>Sample AI Pitch</strong><br><br>Hi! I help businesses improve their online presence and attract more customers. I noticed your business and would love to show you a simple way I can help. Would you be open to a quick chat this week?';
-}
-function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-renderLeads();
+let leads=JSON.parse(localStorage.getItem('hustle_leads')||'[{"biz":"Local Restaurant","service":"Google Reviews","status":"Contacted","value":80},{"biz":"Retail Shop","service":"AI Customer Replies","status":"Interested","value":120},{"biz":"Property Business","service":"Digital Marketing","status":"New Lead","value":80}]');
+let isLogged=localStorage.getItem('hustle_logged')==='1';
+function init(){if(isLogged){showDash()} render();}
+function login(){localStorage.setItem('hustle_logged','1');localStorage.setItem('hustle_email',document.getElementById('loginEmail').value);showDash();}
+function showDash(){document.getElementById('loginScreen').style.display='none';document.getElementById('dashScreen').style.display='block';document.getElementById('welcomeText').innerText='Welcome back, '+(localStorage.getItem('hustle_email')||'Olivie').split('@')[0];}
+function logout(){localStorage.removeItem('hustle_logged');location.reload();}
+function render(){const table=document.getElementById('prospectsTable');table.innerHTML='<div class="row head"><div>Business</div><div>Service</div><div>Status</div></div>';let clients=0,deals=0,earnings=0;leads.forEach(l=>{if(l.status==='Interested'||l.status==='Closed')clients++;if(l.status==='Closed'){deals++;earnings+=(parseInt(l.value)||0);}else if(l.status==='Interested')earnings+=(parseInt(l.value)||0)*0.2;const c=l.status==='Contacted'?'contacted':l.status==='Interested'?'interested':l.status==='New Lead'?'new':'closed';table.innerHTML+=`<div class="row"><div>${l.biz}</div><div>${l.service}</div><div><span class="badge ${c}">${l.status}</span></div></div>`;});document.getElementById('leadsCount').innerText=leads.length;document.getElementById('clientsCount').innerText=clients;document.getElementById('dealsCount').innerText=deals;document.getElementById('earnCount').innerText='$'+Math.round(earnings);}
+function openModal(id){document.getElementById(id).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+function addLead(){const biz=document.getElementById('bizName').value;const service=document.getElementById('service').value;const status=document.getElementById('status').value;const value=document.getElementById('dealValue').value||80;if(!biz){alert('Enter business name');return}leads.unshift({biz,service,status,value});localStorage.setItem('hustle_leads',JSON.stringify(leads));document.getElementById('bizName').value='';closeModal('leadModal');render();}
+function generatePitch(){const biz=document.getElementById('pitchBiz').value||'your business';const service=document.getElementById('pitchService').value;const t={'Google Reviews':`Hi ${biz} team! 👋\n\nI noticed you have amazing food but only few Google reviews. I help restaurants get 50+ 5-star reviews in 30 days.\n\nAutomated via WhatsApp. No extra work.\n\nCan I show 2-min demo tomorrow? Free.\n\n- Olivie | HustleHub`,'AI Customer Replies':`Hello ${biz}! 🚀\n\nI saw you reply manually to customers. What if AI replies instantly 24/7?\n\nMy bot increases bookings 30%. Answers price, location, menu auto.\n\nFree test 3 days?\n\n- Olivie`,'Digital Marketing':`Hi ${biz}! 📈\n\nI help Kampala businesses get 20-40 new customers monthly via TikTok + Google Ads.\n\n100k UGX = 15k reach.\n\nCan I send example ad?\n\n- Olivie`,'Website Design':`Hi ${biz}! 💻\n\nYour Instagram is great but you lose customers without a site that takes orders.\n\nI build fast sites live in 24hrs, mobile-first, WhatsApp orders.\n\nFree preview tonight?\n\n- Olivie`,'WhatsApp Bot':`Hi ${biz}! 🤖\n\nCustomers ask same questions on WhatsApp. I automate it.\n\nBot answers, takes orders, even while you sleep. Saves 3hrs daily.\n\n15 mins setup. Free trial 7 days.\n\nSet up tomorrow?\n\n- Olivie`};const box=document.getElementById('pitchResult');box.style.display='block';box.innerText=t[service];document.getElementById('copyBtn').style.display='block';window.lastPitch=t[service];}
+function copyPitch(){navigator.clipboard.writeText(window.lastPitch);alert('Copied! Paste in WhatsApp');}
+init();
 </script>
-
 </body>
-    </html>
-    
+</html>
