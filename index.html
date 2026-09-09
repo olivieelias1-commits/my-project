@@ -1,111 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HustleHub Pro+</title>
+<title>My Hustle Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:radial-gradient(1200px at 20% 10%, #1e293b 0%, #0f172a 50%, #020617 100%);min-height:100vh;color:white}
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:32px;width:100%;max-width:380px}
-.input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;color:white;margin-bottom:12px;outline:none}
-.btn-primary{width:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border:none;padding:14px;border-radius:12px;color:white;font-weight:700;cursor:pointer}
-.dashboard{max-width:480px;margin:0 auto;padding:20px;display:none}
-.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-.stat{background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:18px}
-.stat span{font-size:13px;opacity:0.6;display:block;margin-bottom:6px}
-.stat b{font-size:26px;font-weight:800}
-.chart-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:16px;margin-bottom:18px}
-.table-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden}
-.row{display:grid;grid-template-columns:1.2fr 1fr 0.9fr 30px;gap:8px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;align-items:center}
-.row.head{opacity:0.5;font-size:11px;font-weight:600;text-transform:uppercase;background:rgba(255,255,255,0.03)}
-.badge{padding:4px 8px;border-radius:20px;font-size:11px;font-weight:600}
-.badge.contacted{background:rgba(96,165,250,0.2);color:#60a5fa}
-.badge.interested{background:rgba(251,191,36,0.2);color:#fbbf24}
-.badge.new{background:rgba(52,211,153,0.2);color:#34d399}
-.badge.closed{background:rgba(139,92,246,0.25);color:#a78bfa}
-.actions{display:flex;gap:10px;margin-top:18px}
-.btn{border:none;padding:13px 18px;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer;flex:1}
-.btn-add{background:linear-gradient(90deg,#8b5cf6,#7c3aed);color:white}
-.btn-pitch{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.1)}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;z-index:50}
-.modal.active{display:flex}
-.modal-box{background:#111827;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;width:100%;max-width:380px}
-.pitch-box{background:rgba(139,92,246,0.1);border:1px dashed rgba(139,92,246,0.4);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;margin:12px 0;white-space:pre-wrap}
-.search-box{display:flex;gap:8px;margin-bottom:14px}
-.del{cursor:pointer;opacity:0.4}
-.del:hover{opacity:1;color:#f87171}
+body{background:#0f0f1a;color:#fff;min-height:100vh;padding-bottom:90px}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at top,#7c3aed22,#0f0f1a)}
+.login-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:32px 24px;border-radius:20px;width:100%;max-width:360px;backdrop-filter:blur(20px)}
+.login-card h1{font-size:26px;font-weight:800;margin-bottom:6px;background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.input{width:100%;padding:14px 16px;margin-top:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-size:15px;outline:none}
+.btn-primary{width:100%;padding:14px;margin-top:16px;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border:none;border-radius:12px;color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.dash{display:none;padding:16px;max-width:480px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;margin:10px 0 18px}
+.header h2{font-size:22px;font-weight:800}
+.header button{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:6px 14px;border-radius:20px;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px}
+.card p{font-size:12px;opacity:0.6;margin-bottom:6px}
+.card h3{font-size:22px;font-weight:800}
+.goal-card{background:linear-gradient(135deg,rgba(139,92,246,0.25),rgba(59,130,246,0.15));border:1px solid rgba(139,92,246,0.3);border-radius:18px;padding:16px;margin-top:12px}
+.goal-top{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.bar{height:8px;background:rgba(255,255,255,0.1);border-radius:10px;margin-top:10px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);border-radius:10px;transition:0.5s}
+.chart-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;margin-top:12px}
+.search-row{display:flex;gap:8px;margin-top:14px}
+.search-row input{flex:1;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;color:#fff;outline:none;font-size:14px}
+.search-row button{padding:12px 18px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:14px;color:#fff}
+.table-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:12px;margin-top:14px;overflow:hidden}
+.row{display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.3fr;gap:6px;padding:12px 6px;border-bottom:1px solid rgba(255,255,255,0.06);align-items:center;font-size:13px}
+.badge{padding:4px 8px;border-radius:20px;font-size:10px;font-weight:700;text-align:center}
+.badge-new{background:rgba(255,255,255,0.1)}
+.badge-contacted{background:rgba(96,165,250,0.2);color:#60a5fa}
+.badge-interested{background:rgba(250,204,21,0.2);color:#facc15}
+.badge-closed{background:rgba(139,92,246,0.3);color:#a78bfa}
+.action-btns{display:flex;gap:4px}
+.icon-btn{width:28px;height:28px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px}
+.wa{background:#25D366;color:#fff}
+.del{background:rgba(255,255,255,0.08);color:#fff}
+.fab{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:14px 28px;border-radius:30px;font-weight:800;box-shadow:0 10px 30px rgba(139,92,246,0.4);cursor:pointer;z-index:50}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px;z-index:100}
+.modal-box{background:#1e1e2f;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:20px;width:100%;max-width:360px}
+.sel{width:100%;padding:12px;margin-top:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff}
 </style>
 </head>
 <body>
-<div id="loginScreen" class="login-wrap">
+<div id="loginScreen" class="login-screen">
 <div class="login-card">
-<h1 style="font-size:28px;font-weight:800;margin-bottom:6px;background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">HustleHub Pro+</h1>
-<p style="opacity:0.6;font-size:14px;margin-bottom:24px">Level 3 Dashboard with Analytics</p>
-<input id="loginEmail" class="input" placeholder="Email" value="olivie@hustlehub.com">
-<input id="loginPass" type="password" class="input" placeholder="Password" value="1234">
+<h1>My Hustle Dashboard</h1>
+<p style="opacity:0.6;font-size:13px;margin-top:6px">Level 4 Pro with WhatsApp</p>
+<input id="email" class="input" placeholder="Email">
+<input id="pass" type="password" class="input" placeholder="Password: 1234">
 <button class="btn-primary" onclick="login()">Unlock Dashboard →</button>
 </div>
 </div>
-<div id="dashScreen" class="dashboard">
-<div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 20px"><h2>My Hustle Dashboard</h2><span onclick="logout()" style="font-size:12px;opacity:0.6;background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px;cursor:pointer">Logout</span></div>
-<p id="welcomeText" style="opacity:0.6;font-size:13px;margin-bottom:14px">Welcome</p>
-<div class="card-grid">
-<div class="stat"><span>Leads</span><b id="leadsCount">0</b></div>
-<div class="stat"><span>Pipeline</span><b id="pipeCount">$0</b></div>
-<div class="stat"><span>Deals</span><b id="dealsCount">0</b></div>
-<div class="stat"><span>Earnings</span><b id="earnCount" style="color:#34d399">$0</b></div>
+<div id="dashScreen" class="dash">
+<div class="header"><h2>My Hustle Dashboard</h2><button onclick="logout()">Logout</button></div>
+<div class="grid">
+<div class="card"><p>Leads</p><h3 id="leadsCount">0</h3></div>
+<div class="card"><p>Pipeline</p><h3 id="pipeVal">$0</h3></div>
+<div class="card"><p>Deals</p><h3 id="dealsCount">0</h3></div>
+<div class="card"><p>Earnings</p><h3 id="earnVal" style="color:#4ade80">$0</h3></div>
 </div>
-<div class="chart-card"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><b style="font-size:13px">Earnings Growth</b><span style="font-size:11px;opacity:0.5">Last 7 days</span></div><canvas id="earnChart" height="140"></canvas></div>
-<div class="search-box"><input id="search" class="input" style="margin:0" placeholder="🔍 Search business..." oninput="render()"><button onclick="render()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:white;padding:0 16px">Go</button></div>
-<div style="font-weight:700;margin:10px 0 12px">Recent prospects</div>
-<div class="table-card" id="prospectsTable"></div>
-<div class="actions"><button class="btn btn-add" onclick="openModal('leadModal')">+ Add Lead</button><button class="btn btn-pitch" onclick="openModal('pitchModal')">🤖 Pitch</button></div>
+<div class="goal-card">
+<div class="goal-top"><span>🎯 Weekly Goal: $500</span><span id="goalPct">0%</span></div>
+<div class="bar"><div id="goalBar" class="bar-fill" style="width:0%"></div></div>
+<p style="font-size:11px;opacity:0.6;margin-top:8px" id="goalText">$0 / $500</p>
 </div>
-<div id="leadModal" class="modal" onclick="if(event.target==this)closeModal('leadModal')"><div class="modal-box"><h3>Add New Lead</h3><input id="bizName" class="input" placeholder="Business name e.g. Kampala Cafe"><select id="service" class="input"><option>Google Reviews</option><option>AI Customer Replies</option><option>Digital Marketing</option><option>Website Design</option><option>WhatsApp Bot</option></select><select id="status" class="input"><option>New Lead</option><option>Contacted</option><option>Interested</option><option>Closed</option></select><input id="dealValue" type="number" class="input" placeholder="Deal value $ e.g. 80"><button class="btn-primary" onclick="addLead()">Save Lead</button></div></div>
-<div id="pitchModal" class="modal" onclick="if(event.target==this)closeModal('pitchModal')"><div class="modal-box"><h3>AI Pitch Generator</h3><input id="pitchBiz" class="input" placeholder="Business name"><select id="pitchService" class="input"><option>Google Reviews</option><option>AI Customer Replies</option><option>Digital Marketing</option><option>Website Design</option><option>WhatsApp Bot</option></select><button class="btn-primary" onclick="generatePitch()">Generate Magic Pitch ✨</button><div id="pitchResult" class="pitch-box" style="display:none"></div><button id="copyBtn" style="display:none" class="btn btn-add" onclick="copyPitch()">Copy to WhatsApp</button></div></div>
+<div class="chart-card">
+<div style="display:flex;justify-content:space-between"><p style="font-weight:700;font-size:14px">Earnings Growth</p><p style="font-size:11px;opacity:0.5">Last 7 days</p></div>
+<canvas id="earnChart" style="width:100%;height:140px;margin-top:10px"></canvas>
+</div>
+<div class="search-row"><input id="searchBox" placeholder="🔍 Search business..."><button onclick="searchLeads()">Go</button></div>
+<div class="table-card"><p style="font-weight:700;margin:6px 6px 12px">Recent prospects</p><div id="leadsList"></div></div>
+<button class="fab" onclick="openModal()">+ Add Lead</button>
+</div>
+<div id="leadModal" class="modal">
+<div class="modal-box">
+<h3>Add New Lead</h3>
+<input id="bizName" class="sel" placeholder="Business name">
+<select id="service" class="sel"><option>AI Customer Replies</option><option>Google Reviews</option><option>WhatsApp Bot</option><option>Lead Gen</option></select>
+<select id="status" class="sel"><option>New Lead</option><option>Contacted</option><option>Interested</option><option>Closed</option></select>
+<input id="dealVal" type="number" class="sel" placeholder="Deal value e.g. 80">
+<button class="btn-primary" onclick="addLead()">Save Lead</button>
+<button class="btn-primary" style="background:rgba(255,255,255,0.08);margin-top:8px" onclick="closeModal()">Cancel</button>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-let leads=JSON.parse(localStorage.getItem('hustle_leads')||'[{"biz":"Local Restaurant","service":"Google Reviews","status":"Contacted","value":80},{"biz":"Retail Shop","service":"AI Customer Replies","status":"Interested","value":120},{"biz":"Property Business","service":"Digital Marketing","status":"New Lead","value":80}]');
-let isLogged=localStorage.getItem('hustle_logged')==='1';
-let chart;
-function init(){if(isLogged)showDash();render();}
-function login(){localStorage.setItem('hustle_logged','1');localStorage.setItem('hustle_email',document.getElementById('loginEmail').value);showDash();}
-function showDash(){document.getElementById('loginScreen').style.display='none';document.getElementById('dashScreen').style.display='block';document.getElementById('welcomeText').innerText='Welcome back, '+(localStorage.getItem('hustle_email')||'olivie').split('@')[0];setTimeout(drawChart,200);}
-function logout(){localStorage.removeItem('hustle_logged');location.reload();}
-function drawChart(){
- const ctx=document.getElementById('earnChart').getContext('2d');
- if(chart)chart.destroy();
- let earn=leads.reduce((a,l)=>a+(l.status==='Closed'?+l.value:l.status==='Interested'?+l.value*0.2:0),0);
- chart=new Chart(ctx,{type:'line',data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[{data:[0,earn*0.2,earn*0.4,earn*0.6,earn*0.8,earn*0.9,earn],borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,0.2)',fill:true,tension:0.4}]},options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#64748b'}},y:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#64748b'}}}}});
-}
-function render(){
- const q=(document.getElementById('search')?.value||'').toLowerCase();
- const table=document.getElementById('prospectsTable');table.innerHTML='<div class="row head"><div>Business</div><div>Service</div><div>Status</div><div></div></div>';
- let clients=0,deals=0,earnings=0,pipe=0;
- leads.filter(l=>l.biz.toLowerCase().includes(q)||l.service.toLowerCase().includes(q)).forEach((l,i)=>{
-  if(l.status==='Interested'||l.status==='Closed')clients++;
-  if(l.status==='Closed'){deals++;earnings+=parseInt(l.value)||0;}
-  else if(l.status==='Interested')earnings+=(parseInt(l.value)||0)*0.2;
-  pipe+=parseInt(l.value)||0;
-  const c=l.status==='Contacted'?'contacted':l.status==='Interested'?'interested':l.status==='New Lead'?'new':'closed';
-  table.innerHTML+=`<div class="row"><div>${l.biz}</div><div>${l.service}</div><div><span class="badge ${c}">${l.status}</span></div><div class="del" onclick="deleteLead(${leads.indexOf(l)})">✕</div></div>`;
- });
- document.getElementById('leadsCount').innerText=leads.length;
- document.getElementById('pipeCount').innerText='$'+pipe;
- document.getElementById('dealsCount').innerText=deals;
- document.getElementById('earnCount').innerText='$'+Math.round(earnings);
- if(chart)drawChart();
-}
-function deleteLead(idx){if(confirm('Delete this lead?')){leads.splice(idx,1);localStorage.setItem('hustle_leads',JSON.stringify(leads));render();}}
-function openModal(id){document.getElementById(id).classList.add('active');}
-function closeModal(id){document.getElementById(id).classList.remove('active');}
-function addLead(){const biz=document.getElementById('bizName').value;const service=document.getElementById('service').value;const status=document.getElementById('status').value;const value=document.getElementById('dealValue').value||80;if(!biz){alert('Enter business name');return}leads.unshift({biz,service,status,value});localStorage.setItem('hustle_leads',JSON.stringify(leads));document.getElementById('bizName').value='';closeModal('leadModal');render();}
-function generatePitch(){const biz=document.getElementById('pitchBiz').value||'your business';const service=document.getElementById('pitchService').value;const t={'Google Reviews':`Hi ${biz} team! 👋\n\nI noticed you have amazing food but only few Google reviews. I help restaurants get 50+ 5-star reviews in 30 days.\n\nAutomated via WhatsApp. No extra work.\n\nCan I show 2-min demo tomorrow? Free.\n\n- Olivie | HustleHub`,'AI Customer Replies':`Hello ${biz}! 🚀\n\nI saw you reply manually to customers. What if AI replies instantly 24/7?\n\nMy bot increases bookings 30%. Answers price, location, menu auto.\n\nFree test 3 days?\n\n- Olivie`,'Digital Marketing':`Hi ${biz}! 📈\n\nI help Kampala businesses get 20-40 new customers monthly via TikTok + Google Ads.\n\n100k UGX = 15k reach.\n\nCan I send example ad?\n\n- Olivie`,'Website Design':`Hi ${biz}! 💻\n\nYour Instagram is great but you lose customers without a site that takes orders.\n\nI build fast sites live in 24hrs, mobile-first, WhatsApp orders.\n\nFree preview tonight?\n\n- Olivie`,'WhatsApp Bot':`Hi ${biz}! 🤖\n\nCustomers ask same questions on WhatsApp. I automate it.\n\nBot answers, takes orders, even while you sleep. Saves 3hrs daily.\n\n15 mins setup. Free trial 7 days.\n\nSet up tomorrow?\n\n- Olivie`};const box=document.getElementById('pitchResult');box.style.display='block';box.innerText=t[service];document.getElementById('copyBtn').style.display='block';window.lastPitch=t[service];}
-function copyPitch(){navigator.clipboard.writeText(window.lastPitch);alert('Copied! Paste in WhatsApp');}
-init();
+let leads=JSON.parse(localStorage.getItem('hustle_leads')||'[{"biz":"Local Restaurants","service":"AI Customer Replies","status":"Closed","val":80},{"biz":"Local Restaurant","service":"Google Reviews","status":"Contacted","val":80},{"biz":"Retail Shop","service":"Google Reviews","status":"Interested","val":120}]');
+let myChart=null;
+function save(){localStorage.setItem('hustle_leads',JSON.stringify(leads))}
+function login(){localStorage.setItem('hustle_logged','1');document.getElementById('loginScreen').style.display='none';document.getElementById('dashScreen').style.display='block';render()}
+function logout(){localStorage.removeItem('hustle_logged');location.reload()}
+function openModal(){document.getElementById('leadModal').style.display='flex'}
+function closeModal(){document.getElementById('leadModal').style.display='none'}
+function addLead(){let b=document.getElementById('bizName').value.trim();if(!b){alert('Add business name');return}let s=document.getElementById('service').value;let st=document.getElementById('status').value;let v=parseInt(document.getElementById('dealVal').value)||80;leads.unshift({biz:b,service:s,status:st,val:v});save();closeModal();document.getElementById('bizName').value='';document.getElementById('dealVal').value='';render()}
+function delLead(i){leads.splice(i,1);save();render()}
+function waLead(i){let l=leads[i];let msg=`Hi ${l.biz}! I help Kampala businesses get more customers with ${l.service}. I can set you up in 24h for $${l.val}. Interested for a quick 5-min demo? - Olivie`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank')}
+function searchLeads(){let q=document.getElementById('searchBox').value.toLowerCase();let filtered=q?leads.filter(x=>x.biz.toLowerCase().includes(q)):leads;renderList(filtered)}
+function renderList(data){let list=document.getElementById('leadsList');if(!data)data=leads;if(data.length==0){list.innerHTML='<p style="opacity:0.5;padding:10px">No leads</p>';return}list.innerHTML=data.map((l,idx)=>{let realIdx=leads.indexOf(l);let badgeClass='badge-new';if(l.status=='Contacted')badgeClass='badge-contacted';if(l.status=='Interested')badgeClass='badge-interested';if(l.status=='Closed')badgeClass='badge-closed';return `<div class="row"><div><b>${l.biz}</b><div style="opacity:0.5;font-size:11px">${l.service} - $${l.val}</div></div><div style="opacity:0.6">${l.service.split(' ')[0]}</div><div><span class="badge ${badgeClass}">${l.status}</span></div><div class="action-btns"><button class="icon-btn wa" onclick="waLead(${realIdx})">💬</button><button class="icon-btn del" onclick="delLead(${realIdx})">✕</button></div></div>`}).join('')}
+function render(){let pipeline=leads.reduce((a,b)=>a+b.val,0);let deals=leads.filter(x=>x.status=='Closed').length;let earnings=leads.reduce((a,b)=>{if(b.status=='Closed')return a+b.val;if(b.status=='Interested')return a+b.val*0.2;if(b.status=='Contacted')return a+b.val*0.1;return a},0);document.getElementById('leadsCount').innerText=leads.length;document.getElementById('pipeVal').innerText='$'+pipeline;document.getElementById('dealsCount').innerText=deals;document.getElementById('earnVal').innerText='$'+Math.round(earnings);let pct=Math.min(100,Math.round(earnings/500*100));document.getElementById('goalPct').innerText=pct+'%';document.getElementById('goalBar').style.width=pct+'%';document.getElementById('goalText').innerText='$'+Math.round(earnings)+' / $500 - '+(pct>=100?'GOAL REACHED! 🎉':(pct>=50?'Halfway! Keep pushing!':'Keep hustling!'));renderList();let ctx=document.getElementById('earnChart').getContext('2d');let growth=[];let step=earnings/6;for(let i=0;i<7;i++)growth.push(Math.round(step*i+Math.random()*10));if(myChart)myChart.destroy();myChart=new Chart(ctx,{type:'line',data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[{data:growth,borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,0.15)',fill:true,tension:0.4,pointRadius:3}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',font:{size:10}}},x:{grid:{display:false},ticks:{color:'#888',font:{size:10}}}}}})}
+if(localStorage.getItem('hustle_logged')){document.getElementById('loginScreen').style.display='none';document.getElementById('dashScreen').style.display='block';render()}
 </script>
 </body>
 </html>
