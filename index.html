@@ -3,40 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Hustle Dashboard PRO - Fixed</title>
+<title>My Hustle - REAL MONEY</title>
 <style>
 body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;padding-bottom:90px}
 .top{display:flex;justify-content:space-between;align-items:center}
-.card{background:#1e1e24;border-radius:16px;padding:15px;margin:10px 0}
+.card{background:#1e1e24;border-radius:16px;padding:15px;margin:10px 0;border:1px solid #2a2a32}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .small{color:#888;font-size:13px}
 .big{font-size:22px;font-weight:bold;margin-top:5px}
 .green{color:#00ff88}
-.bar{height:8px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px}
+.bar{height:10px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px}
 .fill{height:100%;background:linear-gradient(90deg,#8a5cf6,#3b82f6)}
 .lead{background:#2a2a32;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
 .btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:16px 32px;border-radius:30px;font-weight:bold}
 .wa{background:#25D366;color:white;border:none;padding:6px 10px;border-radius:10px;margin-left:5px}
+.momo{background:#ff0000;color:white;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:bold}
 </style>
 </head>
 <body>
-<div class="top"><h2>My Hustle PRO</h2><div><button onclick="exportData()" style="background:#222;color:white;border:none;padding:8px 12px;border-radius:20px">📊 Export</button></div></div>
+<div class="top"><h2>💰 My Hustle</h2><div class="momo">Airtel: 0740930892</div></div>
+<div style="background:linear-gradient(90deg,#8a5cf6,#3b82f6);border-radius:12px;padding:10px;text-align:center;font-size:13px">💵 REAL PAYMENTS to Airtel Money 0740930892</div>
 <div class="grid">
 <div class="card"><div class="small">Leads</div><div class="big" id="leads">0</div></div>
 <div class="card"><div class="small">Pipeline</div><div class="big" id="pipe">$0</div></div>
-<div class="card"><div class="small">Deals</div><div class="big" id="deals">0</div></div>
-<div class="card"><div class="small">Earnings</div><div class="big green" id="earn">$0</div></div>
+<div class="card"><div class="small">Deals Closed</div><div class="big" id="deals">0</div></div>
+<div class="card"><div class="small">Real Earnings</div><div class="big green" id="earn">$0</div></div>
 </div>
 <div class="card">
-<div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: $500</span><span id="pct">0%</span></div>
+<div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: $500 (~1.8M UGX)</span><span id="pct">0%</span></div>
 <div class="bar"><div class="fill" id="fill" style="width:0%"></div></div>
 <div class="small" style="margin-top:6px" id="goalTxt">$0 / $500</div>
 </div>
 <div class="card"><div style="display:flex;justify-content:space-between"><b>Earnings Growth</b><span class="small">Last 7 days</span></div><canvas id="chart" height="120" style="width:100%;height:120px;background:#15151b;border-radius:10px;margin-top:10px"></canvas></div>
-<div class="card"><b>Recent prospects</b><div id="list" style="margin-top:10px"></div></div>
+<div class="card"><b>Recent prospects - Tap 💬 to pitch!</b><div id="list" style="margin-top:10px"></div></div>
 <button class="btn" onclick="addLead()">+ Add Lead</button>
 <script>
-let data=JSON.parse(localStorage.getItem('hustle_data')||'[{"name":"Sembabule Chicken Grill","service":"AI Replies","value":80,"status":"closed"},{"name":"Sembabule Shop","service":"AI Replies","value":100,"status":"new"},{"name":"Sembabule Saloon","service":"AI Replies","value":80,"status":"closed"}]');
+let data=JSON.parse(localStorage.getItem('hustle_data')||'[{"name":"Sembabule Chicken Grill","service":"AI Replies","value":100,"status":"new"},{"name":"Kakumiro Saloon","service":"AI Replies","value":80,"status":"new"},{"name":"Local Shop","service":"AI Replies","value":50,"status":"closed"}]');
 function render(){
 let total=data.reduce((a,b)=>a+b.value,0);
 let closed=data.filter(d=>d.status=='closed');
@@ -44,15 +46,15 @@ let earned=closed.reduce((a,b)=>a+b.value,0);
 document.getElementById('leads').innerText=data.length;
 document.getElementById('pipe').innerText='$'+total;
 document.getElementById('deals').innerText=closed.length;
-document.getElementById('earn').innerText='$'+earned;
+document.getElementById('earn').innerText='$'+earned+' (REAL)';
 let p=Math.min(100,Math.round(earned/500*100));
 document.getElementById('pct').innerText=p+'%';
 document.getElementById('fill').style.width=p+'%';
-document.getElementById('goalTxt').innerText='$'+earned+' / $500';
+document.getElementById('goalTxt').innerText='$'+earned+' / $500 = UGX '+ (earned*3700).toLocaleString();
 let list=document.getElementById('list');list.innerHTML='';
 data.forEach((d,i)=>{
 let div=document.createElement('div');div.className='lead';
-div.innerHTML=`<div><b>${d.name}</b><div class="small">$${d.value}</div></div><div><button onclick="closeDeal(${i})" style="background:${d.status=='closed'?'#00ff88':'#8a5cf6'};border:none;padding:6px 12px;border-radius:10px">${d.status=='closed'?'✓':'+ Close'}</button><button class="wa" onclick="sendWA('${d.name}')">💬</button><button onclick="del(${i})" style="background:#333;color:white;border:none;padding:6px 8px;border-radius:8px;margin-left:3px">X</button></div>`;
+div.innerHTML=`<div><b>${d.name}</b><div class="small">$${d.value} - UGX ${(d.value*3700).toLocaleString()} - ${d.status}</div></div><div><button onclick="closeDeal(${i})" style="background:${d.status=='closed'?'#00ff88':'#8a5cf6'};border:none;padding:6px 12px;border-radius:10px;font-weight:bold">${d.status=='closed'?'✓ PAID':'Close & Get PAID'}</button><button class="wa" onclick="sendWA('${d.name}',${d.value})">💬</button><button onclick="del(${i})" style="background:#333;color:white;border:none;padding:6px 8px;border-radius:8px;margin-left:3px">X</button></div>`;
 list.appendChild(div);
 });
 draw(earned);
@@ -77,11 +79,19 @@ ctx.lineTo(W-10,100);ctx.lineTo(10,100);ctx.closePath();ctx.fillStyle='rgba(138,
 ctx.fillStyle='#666';ctx.font='10px system-ui';
 ['M','T','W','T','F','S','S'].forEach((d,i)=>ctx.fillText(d,10+i*((W-20)/6)-2,115));
 }
-function addLead(){let n=prompt('Business name?');if(!n)return;let v=parseInt(prompt('Value?','100'));data.push({name:n,service:'AI',value:v,status:'new'});render()}
-function closeDeal(i){data[i].status='closed';render()}
+function addLead(){let n=prompt('Business name?','Sembabule Shop');if(!n)return;let v=parseInt(prompt('Value in $?','100'));data.push({name:n,service:'AI',value:v,status:'new'});render()}
+function closeDeal(i){
+if(data[i].status=='closed'){alert('Already PAID to your Airtel 0740930892!');return}
+let ok=confirm(`Did ${data[i].name} send $${data[i].value} to your Airtel 0740930892?\n\nTap OK if you received MoMo, Cancel if not yet.`);
+if(ok){data[i].status='closed';render();alert(`Great! $${data[i].value} marked as PAID to 0740930892!\nCheck your Airtel Money balance.`)}
+}
 function del(i){if(confirm('Delete?')){data.splice(i,1);render()}}
-function sendWA(name){let ph=prompt('WhatsApp number (256...)','256');if(!ph)return;let m=encodeURIComponent('Hello '+name+'! I can help you get more customers with AI auto-replies. Demo?');window.open('https://wa.me/'+ph+'?text='+m,'_blank')}
-function exportData(){let csv='Name,Value,Status\n'+data.map(d=>`${d.name},${d.value},${d.status}`).join('\n');let b=new Blob([csv],{type:'text/csv'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download='earnings.csv';a.click()}
+function sendWA(name,val){
+let ph=prompt('Client WhatsApp number (256...)','256');
+if(!ph)return;
+let msg=encodeURIComponent(`Hello ${name}! 👋\n\nI help businesses in Sembabule get more customers with AI auto-replies.\n\nFor $${val} (~UGX ${(val*3700).toLocaleString()}) I set it up for you.\n\nYou can pay via Airtel Money: 0740930892\n\nWant a 5-min demo today?`);
+window.open('https://wa.me/'+ph+'?text='+msg,'_blank');
+}
 render();
 </script>
 </body>
