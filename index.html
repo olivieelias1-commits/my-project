@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Hustle Dashboard</title>
+<title>My Hustle Dashboard - PRO</title>
 <style>
-body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;padding-bottom:80px}
+body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;padding-bottom:90px}
 .top{display:flex;justify-content:space-between;align-items:center}
 .card{background:#1e1e24;border-radius:16px;padding:15px;margin:10px 0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -13,31 +13,33 @@ body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;
 .big{font-size:22px;font-weight:bold;margin-top:5px}
 .green{color:#00ff88}
 .bar{height:8px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px}
-.fill{height:100%;background:linear-gradient(90deg,#8a5cf6,#3b82f6);width:16%}
-.lead{background:#1e1e24;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
-.btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:14px 28px;border-radius:30px;font-weight:bold;z-index:5}
+.fill{height:100%;background:linear-gradient(90deg,#8a5cf6,#3b82f6);transition:width 0.5s}
+.lead{background:#2a2a32;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
+.btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:16px 32px;border-radius:30px;font-weight:bold;z-index:5}
+.wa{background:#25D366;color:white;border:none;padding:6px 10px;border-radius:10px;margin-left:5px}
 </style>
 </head>
 <body>
-<div class="top"><h2>My Hustle Dashboard</h2><button style="background:#222;color:white;border:none;padding:8px 14px;border-radius:20px">Logout</button></div>
+<div class="top"><h2>My Hustle Dashboard PRO</h2><div><button onclick="exportData()" style="background:#222;color:white;border:none;padding:8px 12px;border-radius:20px;margin-right:5px">📊 Export</button><button style="background:#222;color:white;border:none;padding:8px 14px;border-radius:20px">Logout</button></div></div>
 <div class="grid">
-<div class="card"><div class="small">Leads</div><div class="big" id="leads">2</div></div>
-<div class="card"><div class="small">Pipeline</div><div class="big" id="pipe">$180</div></div>
-<div class="card"><div class="small">Deals</div><div class="big" id="deals">1</div></div>
-<div class="card"><div class="small">Earnings</div><div class="big green" id="earn">$80</div></div>
+<div class="card"><div class="small">Leads</div><div class="big" id="leads">0</div></div>
+<div class="card"><div class="small">Pipeline</div><div class="big" id="pipe">$0</div></div>
+<div class="card"><div class="small">Deals</div><div class="big" id="deals">0</div></div>
+<div class="card"><div class="small">Earnings</div><div class="big green" id="earn">$0</div></div>
 </div>
 <div class="card">
-<div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: $500</span><span id="pct">16%</span></div>
+<div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: $500</span><span id="pct">0%</span></div>
 <div class="bar"><div class="fill" id="fill"></div></div>
-<div class="small" style="margin-top:6px" id="goalTxt">$80 / $500 - Keep hustling!</div>
+<div class="small" style="margin-top:6px" id="goalTxt">$0 / $500</div>
 </div>
-<div class="card"><div style="display:flex;justify-content:space-between"><span>Earnings Growth</span><span class="small">Last 7 days</span></div><canvas id="chart" height="120" width="350"></canvas></div>
-<div class="card"><input id="search" placeholder="🔍 Search business..." style="width:70%;background:#0f0f12;border:none;color:white;padding:8px"><button style="float:right;background:#222;color:white;border:none;padding:6px 12px;border-radius:12px">Go</button></div>
-<div class="card"><b>Recent prospects</b><div id="list"></div></div>
+<div class="card"><div style="display:flex;justify-content:space-between"><b>Earnings Growth</b><span class="small">Last 7 days</span></div><canvas id="chart" height="140" width="340" style="width:100%;margin-top:10px"></canvas></div>
+<div class="card"><div style="display:flex;gap:8px"><input id="search" placeholder="Search business..." style="flex:1;background:#0f0f12;border:1px solid #333;color:white;padding:10px;border-radius:10px"><button onclick="filterLeads()" style="background:#8a5cf6;color:white;border:none;padding:10px 16px;border-radius:10px">Go</button></div></div>
+<div class="card"><b>Recent prospects</b><div id="list" style="margin-top:10px"></div></div>
 <button class="btn" onclick="addLead()">+ Add Lead</button>
 <script>
-let data=JSON.parse(localStorage.getItem('hustle_data')||'[{"name":"Sembabule Chicken Grill","service":"AI Customer Replies","value":80,"status":"closed"},{"name":"Sembabule Chicken Grill","service":"AI Customer Replies","value":100,"status":"new"}]');
-function render(){
+let data=JSON.parse(localStorage.getItem('hustle_data')||'[{"name":"Semblable Chicken Grill","service":"AI Customer Replies","value":80,"status":"closed"},{"name":"Sembabule Chicken Grill","service":"AI Customer Replies","value":100,"status":"new"},{"name":"Sembabule Chicken Grill","service":"AI Customer Replies","value":80,"status":"closed"}]');
+function render(filter=''){
+let fdata=filter?data.filter(d=>d.name.toLowerCase().includes(filter.toLowerCase())):data;
 let total=data.reduce((a,b)=>a+b.value,0);
 let closed=data.filter(d=>d.status=='closed');
 let earned=closed.reduce((a,b)=>a+b.value,0);
@@ -50,28 +52,17 @@ document.getElementById('pct').innerText=p+'%';
 document.getElementById('fill').style.width=p+'%';
 document.getElementById('goalTxt').innerText='$'+earned+' / $500 - Keep hustling!';
 let list=document.getElementById('list');list.innerHTML='';
-data.forEach((d,i)=>{
+fdata.forEach((d,i)=>{
+let realIndex=data.indexOf(d);
 let div=document.createElement('div');div.className='lead';
-div.innerHTML=`<div><b>${d.name}</b><div class="small">${d.service}<br>$${d.value}</div></div><div><button onclick="closeDeal(${i})" style="background:${d.status=='closed'?'#00ff88':'#8a5cf6'};border:none;color:white;padding:5px 10px;border-radius:10px">${d.status=='closed'?'✓ Closed':'Close'}</button> <button onclick="del(${i})" style="background:#333;color:white;border:none;padding:5px 8px;border-radius:10px">X</button></div>`;
+div.innerHTML=`<div style="flex:1"><b>${d.name}</b><div class="small">${d.service} - $${d.value}</div></div><div style="display:flex;align-items:center"><button onclick="closeDeal(${realIndex})" style="background:${d.status=='closed'?'#00ff88':'#8a5cf6'};color:${d.status=='closed'?'#000':'#fff'};border:none;padding:6px 12px;border-radius:10px;font-weight:bold">${d.status=='closed'?'✓ Closed':'Close'}</button><button class="wa" onclick="sendWA('${d.name}')">💬</button><button onclick="del(${realIndex})" style="background:#333;color:white;border:none;padding:6px 10px;border-radius:10px;margin-left:4px">X</button></div>`;
 list.appendChild(div);
 });
 draw(earned);
 localStorage.setItem('hustle_data',JSON.stringify(data));
 }
 function draw(e){
-let c=document.getElementById('chart');let ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);
-ctx.beginPath();ctx.strokeStyle='#8a5cf6';ctx.lineWidth=3;
-let pts=[0,10,20,30,50,70,e];ctx.moveTo(0,110-pts[0]);
-for(let i=1;i<7;i++){ctx.lineTo(i*55,110-pts[i])}ctx.stroke();
-}
-function addLead(){
-let name=prompt('Business name?','Sembabule Shop');if(!name)return;
-let val=parseInt(prompt('Deal value?','100'));if(!val)return;
-data.push({name,service:'AI Customer Replies',value:val,status:'new'});render();
-}
-function closeDeal(i){data[i].status='closed';render()}
-function del(i){if(confirm('Delete?')){data.splice(i,1);render()}}
-render();
-</script>
-</body>
-</html>
+let c=document.getElementById('chart');let ctx=c.getContext('2d');
+ctx.clearRect(0,0,c.width,c.height);
+ctx.strokeStyle='#8a5cf6';ctx.lineWidth=3;ctx.lineJoin='round';
+let pts=[0,Math.max(5,e*0.15
