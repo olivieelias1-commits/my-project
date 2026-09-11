@@ -3,32 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Hustle - Monthly 50k</title>
+<title>Remote 1M - Nyendo</title>
 <style>
-body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;padding-bottom:90px}
-.top{display:flex;justify-content:space-between;align-items:center}
-.card{background:#1e1e24;border-radius:16px;padding:15px;margin:10px 0;border:1px solid #2a2a32}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.small{color:#888;font-size:12px}
-.big{font-size:18px;font-weight:bold;margin-top:5px}
-.green{color:#00ff88}
-.bar{height:10px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px}
-.fill{height:100%;background:linear-gradient(90deg,#8a5cf6,#3b82f6)}
-.lead{background:#2a2a32;border-radius:12px;padding:12px;margin:8px 0}
-.btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:16px 32px;border-radius:30px;font-weight:bold}
-.wa{background:#25D366;color:white;border:none;padding:6px 10px;border-radius:10px;font-weight:bold}
-.momo{background:#ff0000;color:white;padding:8px 12px;border-radius:20px;font-size:11px;font-weight:bold}
-.monthly{background:#FFD700;color:#000;padding:6px 10px;border-radius:10px;font-weight:bold;border:none;margin-top:5px;width:100%}
+body{background:#0f0f12;color:white;font-family:system-ui;padding:12px;padding-bottom:100px;margin:0}
+.card{background:#1e1e24;border-radius:14px;padding:12px;margin:8px 0;border:1px solid #2a2a32}
+.btn{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:14px 28px;border-radius:30px;font-weight:bold;width:90%;max-width:400px}
+.row{display:grid;grid-template-columns:1fr auto auto auto;gap:6px;align-items:center;background:#2a2a32;padding:8px;border-radius:8px;margin:6px 0}
+.tick{width:28px;height:28px;border-radius:50%;border:none;font-weight:bold}
+.momo{background:#ff0000;color:white;padding:8px;border-radius:20px;text-align:center;font-weight:bold;margin:8px 0}
+.small{color:#888;font-size:11px}
 </style>
 </head>
 <body>
-<div class="top"><h2>💰 My Hustle</h2><div class="momo">Airtel: 0740930892</div></div>
-<div style="background:linear-gradient(90deg,#FFD700,#FF8C00);color:#000;border-radius:12px;padding:10px;text-align:center;font-weight:bold">💵 MONTHLY: 50k UGX per client | Setup: 150k</div>
-<div class="grid">
-<div class="card"><div class="small">Total Clients</div><div class="big" id="leads">0</div></div>
-<div class="card"><div class="small">This Month Due</div><div class="big" style="color:#FFD700" id="due">0 UGX</div></div>
-<div class="card"><div class="small">Total Earned</div><div class="big green" id="earn">0 UGX</div></div>
-<div class="card"><div class="small">Monthly Income</div><div class="big" style="color:#FFD700" id="monthly">0 UGX</div></div>
+<h3>📍 Nyendo Remote Hustle - 1M Goal</h3>
+<div class="momo">Airtel Money: 0740930892 - 150k Setup / 50k Monthly</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div class="card" style="text-align:center"><div class="small">Messaged</div><div id="c1" style="font-size:20px;font-weight:bold">0</div></div>
+<div class="card" style="text-align:center"><div class="small">Replied</div><div id="c2" style="font-size:20px;font-weight:bold;color:#00ff88">0</div></div>
+<div class="card" style="text-align:center"><div class="small">Paid 1M?</div><div id="c3" style="font-size:20px;font-weight:bold;color:#FFD700">0 UGX</div></div>
 </div>
-<div class="card"><div style="display:flex;justify-content:space-between"><span>🎯 Monthly Goal: 500k (10 clients x 50k)</span><span id="pct">0%</span></div><div class="bar"><div class="fill" id="fill" style="width:0%"></div></div><div class="small" style="margin-top:6px" id="goalTxt">0 / 500,000 UGX</div></div>
-<div class="card"><b>Clients - Collect 50k every month!</b><div id="list" style="margin-top:10px
+<div class="card"><b>Your Remote List - Click to tick ✅</b><div style="margin-top:8px;display:grid;grid-template-columns:1fr 60px 50px 70px;gap:4px" class="small"><span>Business / Phone</span><span>Messaged</span><span>Replied</span><span>Paid 150k</span></div><div id="list"></div></div>
+<div class="card"><b>Copy-paste message:</b><div id="msg" style="background:#000;padding:8px;border-radius:8px;margin-top:6px;font-size:12px">Hello! 👋 Saw your business on Google Maps. I'm in Nyendo-Kasaana but I help Masaka businesses get MORE customers. I install AI that replies to customers on WhatsApp instantly (even at 2am). Setup: 150,000 UGX once, Monthly: 50,000 UGX only. Pay to: Airtel Money 0740930892. I setup REMOTELY in 1 hour, no need to meet. Interested?</div><button onclick="navigator.clipboard.writeText(document.getElementById('msg').innerText);alert('Copied! Paste to WhatsApp')" style="background:#25D366;color:white;border:none;padding:6px 12px;border-radius:8px;margin-top:6px">📋 Copy Message</button></div>
+<button class="btn" onclick="add()">+ Add Business from Maps</button>
+<script>
+let data=JSON.parse(localStorage.getItem('remote_nyendo')||'[{"name":"Salon Nyendo - 075...","m":false,"r":false,"p":false},{"name":"Boutique Masaka - 070...","m":false,"r":false,"p":false},{"name":"Restaurant Kasaana - 078...","m":false,"r":false,"p":false}]');
+function render(){
+let list=document.getElementById('list');list.innerHTML='';
+let mc=
