@@ -3,132 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Hustle Tracker 1M</title>
+<title>My Hustle Dashboard</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0d0d12;color:#fff;font-family:Arial;padding:14px;padding-bottom:110px}
-.top{display:flex;justify-content:space-between;align-items:center;margin:10px 0 16px}
-.card{background:#191923;border:1px solid #2c2c3a;border-radius:18px;padding:16px;margin-bottom:14px}
-.small{font-size:11px;color:#8a8a9a;letter-spacing:0.5px}
-.big{font-size:28px;font-weight:900;margin-top:4px}
-.bar{height:12px;background:#262636;border-radius:10px;overflow:hidden;margin-top:12px}
-.fill{height:100%;background:linear-gradient(90deg,#00ff88,#5e9eff);width:0%;transition:0.5s}
-.grid{display:flex;gap:10px;margin-bottom:14px}
-.box{flex:1;background:#191923;border:1px solid #2c2c3a;border-radius:16px;padding:14px;text-align:center}
-.box b{font-size:18px;display:block;margin-top:4px}
-.lead{display:flex;justify-content:space-between;align-items:center;background:#232333;padding:14px;border-radius:14px;margin-top:10px}
-.tag{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer}
-.new{background:#2c2c3a;color:#aaa}
-.paid{background:#00ff88;color:#000}
-.msgBox{background:#111119;border:1px solid #2c2c3a;border-radius:14px;padding:12px;font-size:13px;line-height:1.6;white-space:pre-wrap;margin-top:10px;min-height:100px}
-.btnCopy{width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;margin-top:10px}
-.btnAdd{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:92%;max-width:420px;background:#fff;color:#000;border:none;padding:18px;border-radius:30px;font-weight:900;font-size:15px}
-.tabs{display:flex;gap:6px;margin-bottom:10px}
-.t{padding:8px 10px;background:#232333;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer}
-.t.on{background:#fff;color:#000}
+body{background:#0f0f13;color:#fff;font-family:Arial;padding:14px;padding-bottom:120px}
+.top{display:flex;justify-content:space-between;align-items:center;margin:8px 0 16px}
+.top h1{font-size:22px;font-weight:800}
+.btn-logout{background:#2a2a35;color:#aaa;border:none;padding:8px 14px;border-radius:20px;font-size:12px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat{background:#1c1c25;border:1px solid #2b2b38;border-radius:16px;padding:14px}
+.stat .label{font-size:11px;color:#8a8aa0}
+.stat .val{font-size:22px;font-weight:900;margin-top:6px}
+.val.green{color:#00ff88}
+.goal{background:linear-gradient(135deg,#1e1e38,#2a2250);border:1px solid #3a3a5a;border-radius:16px;padding:14px;margin-bottom:14px}
+.goal-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}
+.progress{height:8px;background:#2a2a3f;border-radius:10px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);width:0%;border-radius:10px;transition:0.5s}
+.card{background:#1c1c25;border:1px solid #2b2b38;border-radius:16px;padding:14px;margin-bottom:14px}
+.search-row{display:flex;gap:8px;margin-bottom:14px}
+.search-row input{flex:1;background:#1c1c25;border:1px solid #2b2b38;border-radius:20px;padding:12px 16px;color:#fff;outline:none}
+.search-row button{background:#2a2a35;border:none;color:#fff;padding:12px 18px;border-radius:20px;font-weight:700}
+.prospect{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #2b2b38}
+.pname{font-size:13px;font-weight:700}
+.pdesc{font-size:11px;color:#8a8aa0;margin-top:2px}
+.p-right{display:flex;gap:6px;align-items:center}
+.badge{padding:6px 10px;border-radius:20px;font-size:10px;font-weight:800;border:none;cursor:pointer}
+.badge.new{background:#2a2a35;color:#aaa}
+.badge.paid{background:#00ff88;color:#000}
+.icon-btn{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
+.icon-wa{background:#25D366}
+.icon-del{background:#2a2a35;color:#aaa}
+.fab{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:16px 28px;border-radius:30px;font-weight:800;font-size:14px}
+canvas{width:100%;height:120px;margin-top:10px}
 </style>
 </head>
 <body>
-
-<div class="top">
-<div style="font-weight:900;font-size:20px">💼 MY HUSTLE</div>
-<div style="background:#FFD700;color:#000;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900">GOAL 1M UGX</div>
+<div class="top"><h1>My Hustle Dashboard</h1><button class="btn-logout">Logout</button></div>
+<div class="grid4">
+<div class="stat"><div class="label">Leads</div><div class="val" id="cLeads">4</div></div>
+<div class="stat"><div class="label">Pipeline</div><div class="val" id="cPipe">600k UGX</div></div>
+<div class="stat"><div class="label">Deals</div><div class="val" id="cDeals">0</div></div>
+<div class="stat"><div class="label">Earnings</div><div class="val green" id="cEarn">0 UGX</div></div>
 </div>
-
+<div class="goal">
+<div class="goal-top"><span>🎯 Weekly Goal: 1,000,000 UGX</span><span id="pct">0%</span></div>
+<div class="progress"><div class="fill" id="fill"></div></div>
+<div style="font-size:11px;color:#8a8aa0;margin-top:8px" id="goalText">0 / 1,000,000 - Keep hustling!</div>
+</div>
 <div class="card">
-<div class="small">TOTAL EARNED</div>
-<div class="big" id="total">0 UGX</div>
-<div class="bar"><div class="fill" id="fill"></div></div>
-<div style="display:flex;justify-content:space-between;margin-top:8px" class="small"><span id="pct">0%</span><span id="need">Need 1,000,000</span></div>
+<div style="display:flex;justify-content:space-between"><b style="font-size:14px">Earnings Growth</b><span style="font-size:11px;color:#8a8aa0">Last 7 days</span></div>
+<canvas id="chart"></canvas>
+<div style="display:flex;justify-content:space-between;font-size:10px;color:#8a8aa0;margin-top:4px"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
 </div>
-
-<div class="grid">
-<div class="box"><div class="small">LEADS</div><b id="cLeads">2</b></div>
-<div class="box"><div class="small">PAID</div><b id="cPaid" style="color:#00ff88">0</b></div>
-<div class="box"><div class="small">REMAINING</div><b id="cRem">1M</b></div>
-</div>
-
-<div class="card">
-<div style="display:flex;justify-content:space-between"><b style="font-size:14px">Prospects</b><span class="small">tap NEW to mark PAID</span></div>
-<div id="list"></div>
-</div>
-
-<div class="card">
-<div class="tabs">
-<div class="t on" id="t0" onclick="showMsg(0)">1st Message</div>
-<div class="t" id="t1" onclick="showMsg(1)">After YES</div>
-<div class="t" id="t2" onclick="showMsg(2)">Payment</div>
-</div>
-<div class="msgBox" id="msg"></div>
-<button class="btnCopy" onclick="copyNow()">📋 COPY THIS MESSAGE</button>
-</div>
-
-<button class="btnAdd" onclick="addNew()">+ Add Business From Maps</button>
-
+<div class="search-row"><input id="search" placeholder="🔍 Search business..." oninput="render()"><button onclick="render()">Go</button></div>
+<div class="card"><b style="font-size:14px">Recent prospects</b><div id="list" style="margin-top:10px"></div></div>
+<button class="fab" onclick="addLead()">+ Add Lead</button>
 <script>
-let goal=1000000;
-let total=0;
-let leads=[
-{name:"Elsie Hotel Masaka",status:"NEW"},
-{name:"Victory Hotel Masaka",status:"NEW"}
-];
-
-let msgs=[
-`Hello 👋, is this your business on Google Maps?
-
-I'm Olivie from Nyendo. I help Masaka businesses get more customers by replying instantly to WhatsApp messages, even at 2am.
-
-I made a 30-sec demo for your business. Can I send it?`,
-
-`Great! It answers menu, prices, location and takes orders 24/7 automatically.
-
-Setup is 150k once, then 50k monthly to keep it running. I install it remotely in 1 hour.
-
-Do you have 5 minutes for a quick call?`,
-
-`Thank you! 🙏
-
-Setup is 150k. Please send to:
-Airtel Money: 0740930892 (Olivie Elias)
-Send screenshot after.
-
-I will setup in 1 hour and show you how it works!`
-];
-
-let cur=0;
-function showMsg(i){
-cur=i;
-document.getElementById('msg').innerText=msgs[i];
-document.querySelectorAll('.t').forEach((e,idx)=>{e.className=idx===i?'t on':'t'});
-}
-function copyNow(){
-navigator.clipboard.writeText(msgs[cur]);
-alert('Copied! Now paste on WhatsApp');
-}
-function draw(){
-let h='';
-leads.forEach((l,i)=>{
-h+=`<div class="lead"><div><b style="font-size:13px">${l.name}</b><div class="small">${l.status}</div></div><div class="tag ${l.status==='PAID'?'paid':'new'}" onclick="paid(${i})">${l.status==='PAID'?'PAID ✓':'NEW'}</div></div>`;
-});
-document.getElementById('list').innerHTML=h;
-document.getElementById('total').innerText=total.toLocaleString()+' UGX';
-document.getElementById('fill').style.width=(total/goal*100)+'%';
-document.getElementById('pct').innerText=Math.round(total/goal*100)+'%';
-document.getElementById('need').innerText=total>=goal?'GOAL REACHED 🔥':'Need '+(goal-total).toLocaleString();
-document.getElementById('cLeads').innerText=leads.length;
-document.getElementById('cPaid').innerText=leads.filter(x=>x.status==='PAID').length;
-document.getElementById('cRem').innerText=(goal-total).toLocaleString();
-}
-function paid(i){
-if(leads[i].status!=='PAID'){leads[i].status='PAID';total+=150000;}else{leads[i].status='NEW';total-=150000;if(total<0)total=0;}
-draw();
-}
-function addNew(){
-let n=prompt('Business name from Google Maps?');
-if(n && n.trim()!==''){leads.push({name:n.trim(),status:'NEW'});draw();}
-}
-showMsg(0);
-draw();
+let goal=1000000;let leads=[{name:"Salon",desc:"AI Customer Replies",status:"NEW"},{name:"Semblable Chicken Grill",desc:"Masaka",status:"NEW"},{name:"Elsie Hotel Masaka",desc:"Hotel - Masaka Town",status:"NEW"},{name:"Victory Hotel Masaka",desc:"Hotel - Nyendo",status:"NEW"}];
+let earnings=[0,0,0,0,0,0,0];let total=0;
+function drawChart(){const c=document.getElementById('chart');const ctx=c.getContext('2d');c.width=c.offsetWidth*2;c.height=120*2;ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle='#8b5cf6';ctx.lineWidth=4;ctx.beginPath();const max=Math.max(...earnings,100000);earnings.forEach((v,i)=>{let x=i/(earnings.length-1)*c.width;let y=c.height - (v/max)*c.height*0.8 - 10;if(i==0)ctx.moveTo(x,y); else ctx.lineTo(x,y);});ctx.stroke();ctx.fillStyle='#8b5cf6';earnings.forEach((v,i)=>{let x=i/(earnings.length-1)*c.width;let y=c.height - (v/max)*c.height*0.8 - 10;ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();});}
+function render(){let q=document.getElementById('search').value.toLowerCase();let html='';leads.filter(l=>l.name.toLowerCase().includes(q)).forEach((l)=>{let idx=leads.indexOf(l);html+=`<div class="prospect"><div><div class="pname">${l.name}</div><div class="pdesc">${l.desc} - <b>${l.status}</b></div></div><div class="p-right"><button class="badge ${l.status==='PAID'?'paid':'new'}" onclick="togglePaid(${idx})">${l.status==='PAID'?'PAID ✓':'NEW'}</button><button class="icon-btn icon-wa" onclick="copyMsg('${l.name}')">💬</button><button class="icon-btn icon-del" onclick="removeLead(${idx})">✕</button></div></div>`;});document.getElementById('list').innerHTML=html;let paid=leads.filter(l=>l.status==='PAID').length;document.getElementById('cLeads').innerText=leads.length;document.getElementById('cDeals').innerText=paid;document.getElementById('cEarn').innerText=total.toLocaleString()+' UGX';document.getElementById('cPipe').innerText=(leads.length*150000).toLocaleString()+' UGX';let pct=Math.min(100,Math.round(total/goal*100));document.getElementById('fill').style.width=pct+'%';document.getElementById('pct').innerText=pct+'%';document.getElementById('goalText').innerText=total.toLocaleString()+' / '+goal.toLocaleString()+' - '+(pct>=100?'GOAL HIT! 🔥':'Keep hustling!');}
+function togglePaid(i){if(leads[i].status!=='PAID'){leads[i].status='PAID';total+=150000;earnings[6]+=150000;}else{leads[i].status='NEW';total-=150000;earnings[6]-=150000;if(total<0)total=0;if(earnings[6]<0)earnings[6]=0;}render();drawChart();}
+function removeLead(i){if(confirm('Delete '+leads[i].name+'?')){if(leads[i].status==='PAID'){total-=150000;earnings[6]-=150000;if(total<0)total=0;}leads.splice(i,1);render();drawChart();}}
+function addLead(){let n=prompt('Business name?');if(!n)return;let d=prompt('Note?','Masaka');leads.push({name:n,desc:d||'Masaka',status:'NEW'});render();drawChart();}
+function copyMsg(name){let msg=`Hello 👋, is this ${name}?\n\nI'm Olivie from Nyendo. I help Masaka businesses reply instantly on WhatsApp, even at 2am.\n\nI made a 30-sec demo for your business. Can I send it?`;navigator.clipboard.writeText(msg);alert('Copied for '+name+'!');}
+render();drawChart();
 </script>
 </body>
 </html>
