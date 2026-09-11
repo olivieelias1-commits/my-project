@@ -1,88 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Hustle Dashboard</title>
 <style>
-body{background:#0f0f13;color:white;font-family:sans-serif;margin:0;padding:16px}
-.card{background:#1c1c22;padding:14px;border-radius:14px;margin-bottom:10px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-h1{font-size:22px;margin:8px 0}
-.small{color:#aaa;font-size:12px}
-.green{color:#2eff7a}
-input{width:100%;padding:12px;border-radius:10px;border:0;background:#2a2a33;color:white;margin:6px 0;box-sizing:border-box}
-button{padding:12px 16px;border-radius:20px;border:0;background:#7c5cff;color:white;font-weight:bold}
+body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;padding-bottom:80px}
 .top{display:flex;justify-content:space-between;align-items:center}
+.card{background:#1e1e24;border-radius:16px;padding:15px;margin:10px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.small{color:#888;font-size:13px}
+.big{font-size:22px;font-weight:bold;margin-top:5px}
+.green{color:#00ff88}
+.bar{height:8px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px}
+.fill{height:100%;background:linear-gradient(90deg,#8a5cf6,#3b82f6);width:16%}
+.lead{background:#1e1e24;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
+.btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:14px 28px;border-radius:30px;font-weight:bold;z-index:5}
 </style>
 </head>
 <body>
-<div class="top"><h1>My Hustle Dashboard</h1><button onclick="localStorage.clear();location.reload()" style="background:#333">Logout</button></div>
-
-<div class="row">
-<div class="card">Leads<br><b id="leads">0</b></div>
-<div class="card">Pipeline<br><b id="pipe">$0</b></div>
-<div class="card">Deals<br><b id="deals">0</b></div>
-<div class="card">Earnings<br><b id="earn" class="green">$0</b></div>
+<div class="top"><h2>My Hustle Dashboard</h2><button style="background:#222;color:white;border:none;padding:8px 14px;border-radius:20px">Logout</button></div>
+<div class="grid">
+<div class="card"><div class="small">Leads</div><div class="big" id="leads">2</div></div>
+<div class="card"><div class="small">Pipeline</div><div class="big" id="pipe">$180</div></div>
+<div class="card"><div class="small">Deals</div><div class="big" id="deals">1</div></div>
+<div class="card"><div class="small">Earnings</div><div class="big green" id="earn">$80</div></div>
 </div>
-
 <div class="card">
-<div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: $500</span><span id="pct">0%</span></div>
-<div style="background:#333;height:6px;border-radius:10px;margin:8px 0"><div id="bar" style="height:6px;width:0%;background:#7c5cff;border-radius:10px"></div></div>
-<div class="small" id="goalText">$0 / $500 - Keep hustling!</div>
+<div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: $500</span><span id="pct">16%</span></div>
+<div class="bar"><div class="fill" id="fill"></div></div>
+<div class="small" style="margin-top:6px" id="goalTxt">$80 / $500 - Keep hustling!</div>
 </div>
-
-<div class="card">
-<input id="biz" placeholder="🔍 Search business...">
-<button id="addLeadBtn">+ Add Lead</button>
-<button id="fixBtn" style="background:#ff3b30;margin-top:8px;width:100%">🔄 FIX NaN BUG - TAP ME</button>
-</div>
-
-<div class="card" id="list"><b>Recent prospects</b><div id="prospects"></div></div>
-
+<div class="card"><div style="display:flex;justify-content:space-between"><span>Earnings Growth</span><span class="small">Last 7 days</span></div><canvas id="chart" height="120" width="350"></canvas></div>
+<div class="card"><input id="search" placeholder="🔍 Search business..." style="width:70%;background:#0f0f12;border:none;color:white;padding:8px"><button style="float:right;background:#222;color:white;border:none;padding:6px 12px;border-radius:12px">Go</button></div>
+<div class="card"><b>Recent prospects</b><div id="list"></div></div>
+<button class="btn" onclick="addLead()">+ Add Lead</button>
 <script>
-let data = JSON.parse(localStorage.getItem('hustle')||'[]');
-function toNum(v){ let n=Number(v); return isNaN(n)?0:n; }
-function save(){ localStorage.setItem('hustle', JSON.stringify(data)); render(); }
+let data=JSON.parse(localStorage.getItem('hustle_data')||'[{"name":"Sembabule Chicken Grill","service":"AI Customer Replies","value":80,"status":"closed"},{"name":"Sembabule Chicken Grill","service":"AI Customer Replies","value":100,"status":"new"}]');
 function render(){
-  let leads = data.length;
-  let total = 0; let closed = 0;
-  data.forEach(d=>{
-    let amt = toNum(d.amount);
-    total += amt;
-    if(d.status==='closed') closed++;
-  });
-  // fix NaN
-  if(isNaN(total)) total=0;
-  if(isNaN(closed)) closed=0;
-  let pct = Math.min(100, Math.round((total/500)*100)) || 0;
-  
-  document.getElementById('leads').innerText = leads;
-  document.getElementById('pipe').innerText = '$'+total;
-  document.getElementById('deals').innerText = closed;
-  document.getElementById('earn').innerText = '$'+total;
-  document.getElementById('pct').innerText = pct+'%';
-  document.getElementById('bar').style.width = pct+'%';
-  document.getElementById('goalText').innerText = '$'+total+' / $500 - Keep hustling!';
-  
-  let html='';
-  data.forEach((d,i)=>{
-    html+=`<div style="margin-top:10px;padding:8px;background:#2a2a33;border-radius:8px">${d.name||'Local Restaurant'} - $${toNum(d.amount)} <button onclick="del(${i})" style="padding:4px 8px;background:red">X</button></div>`;
-  });
-  document.getElementById('prospects').innerHTML=html||'<div class="small">No leads yet</div>';
+let total=data.reduce((a,b)=>a+b.value,0);
+let closed=data.filter(d=>d.status=='closed');
+let earned=closed.reduce((a,b)=>a+b.value,0);
+document.getElementById('leads').innerText=data.length;
+document.getElementById('pipe').innerText='$'+total;
+document.getElementById('deals').innerText=closed.length;
+document.getElementById('earn').innerText='$'+earned;
+let p=Math.min(100,Math.round(earned/500*100));
+document.getElementById('pct').innerText=p+'%';
+document.getElementById('fill').style.width=p+'%';
+document.getElementById('goalTxt').innerText='$'+earned+' / $500 - Keep hustling!';
+let list=document.getElementById('list');list.innerHTML='';
+data.forEach((d,i)=>{
+let div=document.createElement('div');div.className='lead';
+div.innerHTML=`<div><b>${d.name}</b><div class="small">${d.service}<br>$${d.value}</div></div><div><button onclick="closeDeal(${i})" style="background:${d.status=='closed'?'#00ff88':'#8a5cf6'};border:none;color:white;padding:5px 10px;border-radius:10px">${d.status=='closed'?'✓ Closed':'Close'}</button> <button onclick="del(${i})" style="background:#333;color:white;border:none;padding:5px 8px;border-radius:10px">X</button></div>`;
+list.appendChild(div);
+});
+draw(earned);
+localStorage.setItem('hustle_data',JSON.stringify(data));
 }
-window.del=(i)=>{ data.splice(i,1); save(); };
-document.getElementById('addLeadBtn').onclick=()=>{
-  let name = document.getElementById('biz').value || 'Local Business';
-  let amt = prompt('Deal amount? Example: 100');
-  let n = toNum(amt);
-  if(!amt || isNaN(Number(amt))){ alert('Enter valid number like 100'); return; }
-  data.push({name, amount:n, status:'open'});
-  document.getElementById('biz').value=''; save();
-};
-document.getElementById('fixBtn').onclick=()=>{
-  data = data.map(d=>({name:d.name||'Business', amount:toNum(d.amount), status:d.status||'open'})).filter(d=>!isNaN(d.amount));
-  save(); alert('Fixed! NaN removed');
-};
+function draw(e){
+let c=document.getElementById('chart');let ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);
+ctx.beginPath();ctx.strokeStyle='#8a5cf6';ctx.lineWidth=3;
+let pts=[0,10,20,30,50,70,e];ctx.moveTo(0,110-pts[0]);
+for(let i=1;i<7;i++){ctx.lineTo(i*55,110-pts[i])}ctx.stroke();
+}
+function addLead(){
+let name=prompt('Business name?','Sembabule Shop');if(!name)return;
+let val=parseInt(prompt('Deal value?','100'));if(!val)return;
+data.push({name,service:'AI Customer Replies',value:val,status:'new'});render();
+}
+function closeDeal(i){data[i].status='closed';render()}
+function del(i){if(confirm('Delete?')){data.splice(i,1);render()}}
 render();
 </script>
 </body>
