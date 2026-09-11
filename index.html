@@ -3,51 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Hustle - UGX 150k</title>
+<title>My Hustle - Monthly 50k</title>
 <style>
 body{background:#0f0f12;color:white;font-family:system-ui;padding:15px;margin:0;padding-bottom:90px}
 .top{display:flex;justify-content:space-between;align-items:center}
 .card{background:#1e1e24;border-radius:16px;padding:15px;margin:10px 0;border:1px solid #2a2a32}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.small{color:#888;font-size:13px}
-.big{font-size:20px;font-weight:bold;margin-top:5px}
+.small{color:#888;font-size:12px}
+.big{font-size:18px;font-weight:bold;margin-top:5px}
 .green{color:#00ff88}
 .bar{height:10px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px}
 .fill{height:100%;background:linear-gradient(90deg,#8a5cf6,#3b82f6)}
-.lead{background:#2a2a32;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
-.btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:16px 32px;border-radius:30px;font-weight:bold;font-size:16px}
-.wa{background:#25D366;color:white;border:none;padding:8px 10px;border-radius:10px;margin-left:5px;font-weight:bold}
-.momo{background:#ff0000;color:white;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:bold}
-.price{background:#00ff88;color:#000;padding:3px 8px;border-radius:8px;font-weight:bold;font-size:12px}
+.lead{background:#2a2a32;border-radius:12px;padding:12px;margin:8px 0}
+.btn{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:white;border:none;padding:16px 32px;border-radius:30px;font-weight:bold}
+.wa{background:#25D366;color:white;border:none;padding:6px 10px;border-radius:10px;font-weight:bold}
+.momo{background:#ff0000;color:white;padding:8px 12px;border-radius:20px;font-size:11px;font-weight:bold}
+.monthly{background:#FFD700;color:#000;padding:6px 10px;border-radius:10px;font-weight:bold;border:none;margin-top:5px;width:100%}
 </style>
 </head>
 <body>
 <div class="top"><h2>💰 My Hustle</h2><div class="momo">Airtel: 0740930892</div></div>
-<div style="background:linear-gradient(90deg,#8a5cf6,#3b82f6);border-radius:12px;padding:10px;text-align:center;font-weight:bold">💵 1 CLIENT = 150,000 UGX</div>
+<div style="background:linear-gradient(90deg,#FFD700,#FF8C00);color:#000;border-radius:12px;padding:10px;text-align:center;font-weight:bold">💵 MONTHLY: 50k UGX per client | Setup: 150k</div>
 <div class="grid">
-<div class="card"><div class="small">Leads</div><div class="big" id="leads">0</div></div>
-<div class="card"><div class="small">Pipeline</div><div class="big" id="pipe">0 UGX</div></div>
-<div class="card"><div class="small">Deals Closed</div><div class="big" id="deals">0</div></div>
-<div class="card"><div class="small">Real Earnings</div><div class="big green" id="earn">0 UGX</div></div>
+<div class="card"><div class="small">Total Clients</div><div class="big" id="leads">0</div></div>
+<div class="card"><div class="small">This Month Due</div><div class="big" style="color:#FFD700" id="due">0 UGX</div></div>
+<div class="card"><div class="small">Total Earned</div><div class="big green" id="earn">0 UGX</div></div>
+<div class="card"><div class="small">Monthly Income</div><div class="big" style="color:#FFD700" id="monthly">0 UGX</div></div>
 </div>
-<div class="card">
-<div style="display:flex;justify-content:space-between"><span>🎯 Goal: 1,500,000 UGX (10 clients)</span><span id="pct">0%</span></div>
-<div class="bar"><div class="fill" id="fill" style="width:0%"></div></div>
-<div class="small" style="margin-top:6px" id="goalTxt">0 / 1,500,000 UGX</div>
-</div>
-<div class="card"><div style="display:flex;justify-content:space-between"><b>Earnings Growth</b><span class="small">UGX</span></div><canvas id="chart" height="120" style="width:100%;height:120px;background:#15151b;border-radius:10px;margin-top:10px"></canvas></div>
-<div class="card"><b>Clients - 150k each - Tap 💬 to sell!</b><div id="list" style="margin-top:10px"></div></div>
-<button class="btn" onclick="addLead()">+ Add Client (150k)</button>
-<script>
-let data=JSON.parse(localStorage.getItem('hustle_ugx')||'[{"name":"Sembabule Chicken Grill","value":150000,"status":"new"},{"name":"Kakumiro Saloon","value":150000,"status":"new"},{"name":"Local Shop","value":70000,"status":"closed"}]');
-function render(){
-let total=data.reduce((a,b)=>a+b.value,0);
-let closed=data.filter(d=>d.status=='closed');
-let earned=closed.reduce((a,b)=>a+b.value,0);
-document.getElementById('leads').innerText=data.length;
-document.getElementById('pipe').innerText=total.toLocaleString()+' UGX';
-document.getElementById('deals').innerText=closed.length;
-document.getElementById('earn').innerText=earned.toLocaleString()+' UGX';
-let p=Math.min(100,Math.round(earned/1500000*100));
-document.getElementById('pct').innerText=p+'%';
-document
+<div class="card"><div style="display:flex;justify-content:space-between"><span>🎯 Monthly Goal: 500k (10 clients x 50k)</span><span id="pct">0%</span></div><div class="bar"><div class="fill" id="fill" style="width:0%"></div></div><div class="small" style="margin-top:6px" id="goalTxt">0 / 500,000 UGX</div></div>
+<div class="card"><b>Clients - Collect 50k every month!</b><div id="list" style="margin-top:10px
