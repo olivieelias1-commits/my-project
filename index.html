@@ -1,7 +1,134 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Remote 1M Nyendo</title><style>body{background:#0f0f12;color:#fff;font-family:system-ui;padding:12px;padding-bottom:100px;margin:0}.card{background:#1e1e24;border-radius:16px;padding:14px;margin:10px 0;border:1px solid #2a2a32}.momo{background:#ff0000;color:#fff;padding:10px;border-radius:20px;text-align:center;font-weight:bold}.goal{background:linear-gradient(135deg,#1e1e24,#2a1a4a);border-radius:16px;padding:14px;margin:10px 0}.bar{background:#333;height:8px;border-radius:4px;margin-top:8px}.fill{background:linear-gradient(90deg,#8a5cf6,#3b82f6);height:8px;border-radius:4px;width:0%}.row{display:flex;justify-content:space-between;align-items:center;background:#2a2a32;padding:10px;border-radius:10px;margin:6px 0}.btn{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8a5cf6,#3b82f6);color:#fff;border:none;padding:14px 28px;border-radius:30px;font-weight:bold;width:90%;max-width:400px}</style></head><body><div class="momo">Airtel Money: 0740930892 - 150k Setup / 50k Monthly</div><div class="goal"><div style="display:flex;justify-content:space-between"><span>🎯 Weekly Goal: 1,000,000 UGX</span><span id="pct">0%</span></div><div class="bar"><div class="fill" id="fill"></div></div><div style="font-size:12px;color:#aaa;margin-top:6px" id="txt">0 / 1,000,000 - Keep hustling from Nyendo!</div></div><div class="card"><b>Earnings Growth - Last 7 days</b><div id="chart" style="height:60px;display:flex;align-items:end;gap:4px;margin-top:10px"></div></div><div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><b>Recent prospects - Remote</b><span style="font-size:11px;color:#888">Tap ✅ when paid to 0740930892</span></div><div id="list" style="margin-top:10px"></div></div><button class="btn" onclick="add()">+ Add Lead - From Maps</button><script>
-let data=JSON.parse(localStorage.getItem('nyendo_final')||'[{"name":"Salon","phone":"075...","deal":"AI Replies - 150k","status":"New Lead"},{"name":"Semblable Chicken Grill","phone":"070...","deal":"AI Replies - 150k","status":"New Lead"}]');
-function render(){let list=document.getElementById('list');list.innerHTML='';let total=0;let counts={};data.forEach(d=>{if(d.status==='Closed'){total+=150000;counts[d.name]=1}});let pct=Math.min(100,Math.round(total/1000000*100));document.getElementById('pct').innerText=pct+'%';document.getElementById('fill').style.width=pct+'%';document.getElementById('txt').innerText=total.toLocaleString()+' / 1,000,000 - '+(pct>=100?'1M DONE! 🎉':'Keep hustling from Nyendo!');let ch=document.getElementById('chart');ch.innerHTML='';let v=0;for(let i=0;i<7;i++){v+=total/7;let h=document.createElement('div');h.style.flex='1';h.style.background='linear-gradient(#8a5cf6,#3b82f6)';h.style.height=(10+v/5000)+'px';h.style.borderRadius='4px';ch.appendChild(h)};data.slice().reverse().forEach((d,i)=>{let idx=data.length-1-i;let div=document.createElement('div');div.className='row';let st=d.status==='Closed'?'background:#4a2a8a;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px':'background:#333;color:#aaa;padding:4px 10px;border-radius:12px;font-size:11px';div.innerHTML=`<div><b>${d.name}</b><br><span style="font-size:11px;color:#888">${d.deal} - ${d.phone}</span></div><div style="display:flex;gap:6px;align-items:center"><span style="${st}">${d.status}</span><button onclick="closeDeal(${idx})" style="background:${d.status==='Closed'?'#00ff88':'#25D366'};border:none;border-radius:50%;width:32px;height:32px">💬</button></div>`;list.appendChild(div)});localStorage.setItem('nyendo_final',JSON.stringify(data))}
-function closeDeal(i){if(data[i].status==='Closed'){if(confirm('Mark as not paid?')){data[i].status='New Lead'}}else{if(confirm('Paid 150k to Airtel 0740930892?')){data[i].status='Closed'}}render()}
-function add(){let n=prompt('Business name from Maps? (e.g Salon Nyendo)');if(!n)return;let p=prompt('Phone from Maps? (e.g 0751234567)');if(!p)return;data.push({name:n,phone:p,deal:'AI Replies - 150k',status:'New Lead'});render()}
-render();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Hustle Tracker 1M</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d12;color:#fff;font-family:Arial;padding:14px;padding-bottom:110px}
+.top{display:flex;justify-content:space-between;align-items:center;margin:10px 0 16px}
+.card{background:#191923;border:1px solid #2c2c3a;border-radius:18px;padding:16px;margin-bottom:14px}
+.small{font-size:11px;color:#8a8a9a;letter-spacing:0.5px}
+.big{font-size:28px;font-weight:900;margin-top:4px}
+.bar{height:12px;background:#262636;border-radius:10px;overflow:hidden;margin-top:12px}
+.fill{height:100%;background:linear-gradient(90deg,#00ff88,#5e9eff);width:0%;transition:0.5s}
+.grid{display:flex;gap:10px;margin-bottom:14px}
+.box{flex:1;background:#191923;border:1px solid #2c2c3a;border-radius:16px;padding:14px;text-align:center}
+.box b{font-size:18px;display:block;margin-top:4px}
+.lead{display:flex;justify-content:space-between;align-items:center;background:#232333;padding:14px;border-radius:14px;margin-top:10px}
+.tag{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer}
+.new{background:#2c2c3a;color:#aaa}
+.paid{background:#00ff88;color:#000}
+.msgBox{background:#111119;border:1px solid #2c2c3a;border-radius:14px;padding:12px;font-size:13px;line-height:1.6;white-space:pre-wrap;margin-top:10px;min-height:100px}
+.btnCopy{width:100%;background:#25D366;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;margin-top:10px}
+.btnAdd{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:92%;max-width:420px;background:#fff;color:#000;border:none;padding:18px;border-radius:30px;font-weight:900;font-size:15px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.t{padding:8px 10px;background:#232333;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer}
+.t.on{background:#fff;color:#000}
+</style>
+</head>
+<body>
+
+<div class="top">
+<div style="font-weight:900;font-size:20px">💼 MY HUSTLE</div>
+<div style="background:#FFD700;color:#000;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900">GOAL 1M UGX</div>
+</div>
+
+<div class="card">
+<div class="small">TOTAL EARNED</div>
+<div class="big" id="total">0 UGX</div>
+<div class="bar"><div class="fill" id="fill"></div></div>
+<div style="display:flex;justify-content:space-between;margin-top:8px" class="small"><span id="pct">0%</span><span id="need">Need 1,000,000</span></div>
+</div>
+
+<div class="grid">
+<div class="box"><div class="small">LEADS</div><b id="cLeads">2</b></div>
+<div class="box"><div class="small">PAID</div><b id="cPaid" style="color:#00ff88">0</b></div>
+<div class="box"><div class="small">REMAINING</div><b id="cRem">1M</b></div>
+</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between"><b style="font-size:14px">Prospects</b><span class="small">tap NEW to mark PAID</span></div>
+<div id="list"></div>
+</div>
+
+<div class="card">
+<div class="tabs">
+<div class="t on" id="t0" onclick="showMsg(0)">1st Message</div>
+<div class="t" id="t1" onclick="showMsg(1)">After YES</div>
+<div class="t" id="t2" onclick="showMsg(2)">Payment</div>
+</div>
+<div class="msgBox" id="msg"></div>
+<button class="btnCopy" onclick="copyNow()">📋 COPY THIS MESSAGE</button>
+</div>
+
+<button class="btnAdd" onclick="addNew()">+ Add Business From Maps</button>
+
+<script>
+let goal=1000000;
+let total=0;
+let leads=[
+{name:"Elsie Hotel Masaka",status:"NEW"},
+{name:"Victory Hotel Masaka",status:"NEW"}
+];
+
+let msgs=[
+`Hello 👋, is this your business on Google Maps?
+
+I'm Olivie from Nyendo. I help Masaka businesses get more customers by replying instantly to WhatsApp messages, even at 2am.
+
+I made a 30-sec demo for your business. Can I send it?`,
+
+`Great! It answers menu, prices, location and takes orders 24/7 automatically.
+
+Setup is 150k once, then 50k monthly to keep it running. I install it remotely in 1 hour.
+
+Do you have 5 minutes for a quick call?`,
+
+`Thank you! 🙏
+
+Setup is 150k. Please send to:
+Airtel Money: 0740930892 (Olivie Elias)
+Send screenshot after.
+
+I will setup in 1 hour and show you how it works!`
+];
+
+let cur=0;
+function showMsg(i){
+cur=i;
+document.getElementById('msg').innerText=msgs[i];
+document.querySelectorAll('.t').forEach((e,idx)=>{e.className=idx===i?'t on':'t'});
+}
+function copyNow(){
+navigator.clipboard.writeText(msgs[cur]);
+alert('Copied! Now paste on WhatsApp');
+}
+function draw(){
+let h='';
+leads.forEach((l,i)=>{
+h+=`<div class="lead"><div><b style="font-size:13px">${l.name}</b><div class="small">${l.status}</div></div><div class="tag ${l.status==='PAID'?'paid':'new'}" onclick="paid(${i})">${l.status==='PAID'?'PAID ✓':'NEW'}</div></div>`;
+});
+document.getElementById('list').innerHTML=h;
+document.getElementById('total').innerText=total.toLocaleString()+' UGX';
+document.getElementById('fill').style.width=(total/goal*100)+'%';
+document.getElementById('pct').innerText=Math.round(total/goal*100)+'%';
+document.getElementById('need').innerText=total>=goal?'GOAL REACHED 🔥':'Need '+(goal-total).toLocaleString();
+document.getElementById('cLeads').innerText=leads.length;
+document.getElementById('cPaid').innerText=leads.filter(x=>x.status==='PAID').length;
+document.getElementById('cRem').innerText=(goal-total).toLocaleString();
+}
+function paid(i){
+if(leads[i].status!=='PAID'){leads[i].status='PAID';total+=150000;}else{leads[i].status='NEW';total-=150000;if(total<0)total=0;}
+draw();
+}
+function addNew(){
+let n=prompt('Business name from Google Maps?');
+if(n && n.trim()!==''){leads.push({name:n.trim(),status:'NEW'});draw();}
+}
+showMsg(0);
+draw();
+</script>
+</body>
+</html>
